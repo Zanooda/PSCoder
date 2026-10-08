@@ -134,18 +134,14 @@ function Start-PSCoder {
             Write-AgentResult -Result "Context compacted. Continuing conversation."
         }
 
-        # Tool calling loop
-        $maxRounds = 10
-        $round = 0
+        # Tool calling loop - runs until the model stops requesting tools
         $continueLoop = $true
         $startTime = Get-Date
         $toolResultCount = 0
         $lastError = $null
         $retryCount = 0
 
-        while ($continueLoop -and $round -lt $maxRounds) {
-            $round++
-            $queryDepth++
+        while ($continueLoop) {
             $toolSchemas = if ($config.toolsEnabled -ne $false) { Get-ToolSchemas } else { @() }
 
             Write-AgentThought -Thought "Processing your request..."
@@ -188,13 +184,11 @@ function Start-PSCoder {
                     $retryCount++
                     Write-AgentError -Error "Rate limited. Retrying in $($retryCount * 5)s (attempt $retryCount/2)..."
                     Start-Sleep -Seconds ($retryCount * 5)
-                    $round--
                     continue
                 }
                 elseif ($apiError -match "context|token|length" -and $messages.Count -gt 3) {
                     Write-AgentError -Error "Context too long. Compacting and retrying..."
                     $messages = Invoke-AutoCompact -Messages $messages -SystemPrompt $systemPrompt -ContextWindow $contextWindow -Threshold $compactThreshold -Model $model -Provider $provider
-                    $round--
                     $retryCount = 0
                     continue
                 }
@@ -380,10 +374,6 @@ function Start-PSCoder {
                 $totalTokens += $response.usage.total_tokens
                 $sessionCost += Get-EstimatedCost -Model $model -Tokens $response.usage.total_tokens -Provider $provider
             }
-        }
-
-        if ($round -ge $maxRounds) {
-            Write-InfoPS "Tool iteration limit reached."
         }
 
         # Stop hooks: extract memories, auto-dream
