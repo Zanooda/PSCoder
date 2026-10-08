@@ -8,8 +8,8 @@ $Script:DefaultConfig = @{
     groqApiKey      = ""
     orcaApiKey      = ""
     braveSearchApiKey = ""
-    provider        = "openrouter"
-    model           = "nvidia/nemotron-3-super-120b-a12b:free"
+    provider        = "custom"
+    model           = "deepseek-v4.1-flash"
     orcaModel       = "z-ai/glm-5.3-flash-free"
     maxTokens       = 4096
     temperature     = 0.7
@@ -85,12 +85,12 @@ function Set-PSCoderConfig {
     $config | ConvertTo-Json -Depth 10 | Set-Content -Path $Script:PSCoderConfigFile -Encoding UTF8
 }
 
-function Get-OpenRouterApiKey {
+function Get-CustomApiKey {
     $config = Get-PSCoderConfig
     if ($config.apiKey -and $config.apiKey -ne "") {
         return $config.apiKey
     }
-    if ($env:OPENROUTER_API_KEY) { return $env:OPENROUTER_API_KEY }
+    if ($env:SLOP_API_KEY) { return $env:SLOP_API_KEY }
     return $null
 }
 
@@ -117,8 +117,8 @@ function Test-PSCoderConfig {
     $issues = @()
 
     if (-not $config.apiKey -or $config.apiKey -eq "") {
-        if (-not $env:OPENROUTER_API_KEY) {
-            $issues += "OpenRouter API key not set. Set via '/provider' command or `$env:OPENROUTER_API_KEY"
+        if (-not $env:SLOP_API_KEY) {
+            $issues += "Custom endpoint API key not set. Set via '/config apiKey <key>' or `$env:SLOP_API_KEY"
         }
     }
 

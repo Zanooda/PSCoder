@@ -4,7 +4,7 @@
 [![PowerShell](https://img.shields.io/badge/PowerShell-%3E%3D5.1-blue)](https://github.com/PowerShell/PowerShell)
 [![GitHub repo](https://img.shields.io/badge/GitHub-PSCoder-blue?logo=github)](https://github.com/josevdr95new/PSCoder)
 
-AI-powered coding assistant that runs in your PowerShell terminal. Uses OpenRouter or Groq APIs to understand your codebase, edit files, search the web, and solve problems autonomously.
+AI-powered coding assistant that runs in your PowerShell terminal. Uses a custom OpenAI-compatible endpoint (slop.storo.cloud) or Groq to understand your codebase, edit files, search the web, and solve problems autonomously.
 
 **Repository:** https://github.com/josevdr95new/PSCoder
 
@@ -65,7 +65,7 @@ AI-powered coding assistant that runs in your PowerShell terminal. Uses OpenRout
 
 ### Prerequisites
 - PowerShell 5.1 or later (Windows 10/11)
-- An API key from [OpenRouter](https://openrouter.ai) or [Groq](https://groq.com)
+- An API key for the custom OpenAI-compatible endpoint (https://slop.storo.cloud/v1) or [Groq](https://groq.com)
 
 ### Setup
 ```powershell
@@ -78,7 +78,7 @@ Import-Module .\PSCoder.psd1
 
 # Set your API key (choose one)
 # Option 1: Environment variable
-$env:OPENROUTER_API_KEY = "your-key-here"
+$env:SLOP_API_KEY = "your-key-here"
 
 # Option 2: Interactive config
 Start-PSCoder
@@ -89,8 +89,8 @@ Start-PSCoder
 
 ### API Keys
 ```powershell
-# OpenRouter (recommended - access to many models)
-$env:OPENROUTER_API_KEY = "your-key"
+# Custom OpenAI-compatible endpoint (default; slop.storo.cloud)
+$env:SLOP_API_KEY = "your-key"
 
 # Groq (fast inference)
 $env:GROQ_API_KEY = "your-key"
@@ -102,12 +102,10 @@ $env:BRAVE_SEARCH_API_KEY = "your-key"
 ### Models
 ```powershell
 # Inside PSCoder, change model
-/model openai/gpt-4o
-/model google/gemini-2.5-flash
-/model qwen/qwen3.6-plus:free
+/model deepseek-v4.1-flash
 
 # Change provider
-/provider openrouter
+/provider custom
 /provider groq
 ```
 
@@ -160,9 +158,9 @@ Start-PSCoder
 
 ```
 PSCoder/
-├── API/                    # API clients (OpenRouter, Groq)
+├── API/                    # API clients (custom, Groq)
 │   ├── BaseClient.ps1      # Shared HTTP client with retry logic
-│   ├── OpenRouter.ps1      # OpenRouter API integration
+│   ├── Custom.ps1          # Custom OpenAI-compatible endpoint integration
 │   └── Groq.ps1            # Groq API integration
 ├── Commands/
 │   └── SlashCommands.ps1   # Slash command handler

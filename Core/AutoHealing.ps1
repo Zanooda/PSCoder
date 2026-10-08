@@ -70,7 +70,7 @@ function Invoke-AutoHeal {
         $alternatives = @(
             "Try: Verify API key with '/config apiKey'",
             "Try: Switch provider with '/provider groq'",
-            "Try: Check API quota at openrouter.ai"
+            "Try: Check API quota/status at slop.storo.cloud"
         )
     }
     elseif ($ErrorMessage -match "network|conexion|connection|dns") {

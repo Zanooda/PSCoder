@@ -18,7 +18,7 @@ function Write-PSCoderBanner {
     Write-Host " |_|    |____/\____| |____/ \___|_|" -ForegroundColor $Script:Colors.Accent
     Write-Host ""
     Write-Host "  AI Assistant for PowerShell" -ForegroundColor $Script:Colors.Bright
-    Write-Host "  OpenRouter API - GPT, Gemini, Qwen, Llama" -ForegroundColor $Script:Colors.Dim
+    Write-Host "  Custom OpenAI-compatible API (slop.storo.cloud)" -ForegroundColor $Script:Colors.Dim
     Write-Host ""
 }
 

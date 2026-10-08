@@ -20,7 +20,7 @@ $modulesToLoad = @(
     "Tools/Cache.ps1"
     "UI/Formatter.ps1"
     "API/BaseClient.ps1"
-    "API/OpenRouter.ps1"
+    "API/Custom.ps1"
     "API/Groq.ps1"
     "API/OrcaRouter.ps1"
     "Tools/WebSearch.ps1"

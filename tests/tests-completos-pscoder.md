@@ -4,7 +4,7 @@
 # - 8 Skills (code-generation, data-extraction, debug, docs, file-analysis, ps-admin, refactor, web-research)
 # - 20 Herramientas (tools) registradas en ToolRegistry
 # - 5 Sistemas Core (AutoHealing, AutoImprove, MemoryDecision, Hooks, ReasoningEngine)
-# - 3 Providers (OpenRouter, Groq, OrcaRouter)
+# - 3 Providers (Custom, Groq, OrcaRouter)
 # - Slash commands (/help, /model, /provider, /memory, /config, /narrate, /tools)
 #
 # Provider: /provider orca
@@ -19,9 +19,9 @@
 
 2. "/tools — Ejecuta /tools y verifica que lista las 20 herramientas: execute_powershell, read_file, write_file, edit_file, search_files, glob_files, list_directory, get_current_dir, web_search, web_fetch, auto_heal, learn_from_error, find_solution, ocr_image, create_plan, verify_step, verify_task, save_learning, list_skills, read_skill, add_plan_step."
 
-3. "/model — Ejecuta /model sin argumentos y verifica que muestra modelos de OpenRouter, Groq Y OrcaRouter (incluyendo los modelos -free)."
+3. "/model — Ejecuta /model sin argumentos y verifica que muestra modelos de Custom, Groq Y OrcaRouter (incluyendo los modelos -free)."
 
-4. "/provider — Ejecuta /provider sin argumentos. Debe mostrar: openrouter, groq, orca. Luego ejecuta /provider orca y verifica que cambia el provider y el modelo a z-ai/glm-5.3-flash-free."
+4. "/provider — Ejecuta /provider sin argumentos. Debe mostrar: custom, groq, orca. Luego ejecuta /provider orca y verifica que cambia el provider y el modelo a z-ai/glm-5.3-flash-free."
 
 5. "/config — Ejecuta /config y verifica que muestra todas las claves de configuración: apiKey, groqApiKey, orcaApiKey, provider, model, orcaModel, maxTokens, temperature, etc. Luego ejecuta /config temperature 0.5 y verifica que se actualiza."
 
@@ -248,7 +248,7 @@
 - [ ] ReasoningEngine (Tests 28, 35)
 
 ### 3 Providers
-- [ ] OpenRouter (Test 3)
+- [ ] Custom (Test 3)
 - [ ] Groq (Test 3)
 - [ ] OrcaRouter (Test 4)
 

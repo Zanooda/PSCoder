@@ -4,7 +4,7 @@
 [![PowerShell](https://img.shields.io/badge/PowerShell-%3E%3D5.1-blue)](https://github.com/PowerShell/PowerShell)
 [![GitHub repo](https://img.shields.io/badge/GitHub-PSCoder-blue?logo=github)](https://github.com/josevdr95new/PSCoder)
 
-Asistente de programacion con IA que se ejecuta en tu terminal de PowerShell. Usa las APIs de OpenRouter o Groq para entender tu codigo, editar archivos, buscar en la web y resolver problemas de forma autonoma.
+Asistente de programacion con IA que se ejecuta en tu terminal de PowerShell. Usa un endpoint personalizado compatible con OpenAI (slop.storo.cloud) o Groq para entender tu codigo, editar archivos, buscar en la web y resolver problemas de forma autonoma.
 
 **Repositorio:** https://github.com/josevdr95new/PSCoder
 
@@ -65,7 +65,7 @@ Asistente de programacion con IA que se ejecuta en tu terminal de PowerShell. Us
 
 ### Requisitos
 - PowerShell 5.1 o posterior (Windows 10/11)
-- Una clave API de [OpenRouter](https://openrouter.ai) o [Groq](https://groq.com)
+- Una clave API para el endpoint personalizado compatible con OpenAI (https://slop.storo.cloud/v1) o [Groq](https://groq.com)
 
 ### Configuracion
 ```powershell
@@ -78,7 +78,7 @@ Import-Module .\PSCoder.psd1
 
 # Configurar tu clave API (elige una)
 # Opcion 1: Variable de entorno
-$env:OPENROUTER_API_KEY = "tu-clave-aqui"
+$env:SLOP_API_KEY = "tu-clave-aqui"
 
 # Opcion 2: Configuracion interactiva
 Start-PSCoder
@@ -89,8 +89,8 @@ Start-PSCoder
 
 ### Claves API
 ```powershell
-# OpenRouter (recomendado - acceso a muchos modelos)
-$env:OPENROUTER_API_KEY = "tu-clave"
+# Endpoint personalizado compatible con OpenAI (por defecto; slop.storo.cloud)
+$env:SLOP_API_KEY = "tu-clave"
 
 # Groq (inferencia rapida)
 $env:GROQ_API_KEY = "tu-clave"
@@ -102,12 +102,10 @@ $env:BRAVE_SEARCH_API_KEY = "tu-clave"
 ### Modelos
 ```powershell
 # Dentro de PSCoder, cambiar modelo
-/model openai/gpt-4o
-/model google/gemini-2.5-flash
-/model qwen/qwen3.6-plus:free
+/model deepseek-v4.1-flash
 
 # Cambiar proveedor
-/provider openrouter
+/provider custom
 /provider groq
 ```
 
@@ -160,9 +158,9 @@ Start-PSCoder
 
 ```
 PSCoder/
-├── API/                    # Clientes de API (OpenRouter, Groq)
+├── API/                    # Clientes de API (personalizado, Groq)
 │   ├── BaseClient.ps1      # Cliente HTTP compartido con reintentos
-│   ├── OpenRouter.ps1      # Integracion con OpenRouter
+│   ├── Custom.ps1          # Integracion con endpoint compatible con OpenAI
 │   └── Groq.ps1            # Integracion con Groq
 ├── Commands/
 │   └── SlashCommands.ps1   # Manejador de comandos slash

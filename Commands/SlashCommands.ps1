@@ -33,8 +33,8 @@ function Invoke-SlashCommand {
                 Write-InfoPS "Model changed to: $args"
             } else {
                 Write-HeaderPS "Available models"
-                Write-Host "  [OpenRouter]" -ForegroundColor Cyan
-                Get-ModelsList | ForEach-Object { Write-Host "  $_" -ForegroundColor Gray }
+                Write-Host "  [Custom - slop.storo.cloud]" -ForegroundColor Cyan
+                Get-CustomModelsList | ForEach-Object { Write-Host "  $_" -ForegroundColor Gray }
                 Write-Host "  [Groq]" -ForegroundColor Cyan
                 Get-GroqModelsList | ForEach-Object { Write-Host "  $_" -ForegroundColor Gray }
                 Write-Host "  [OrcaRouter]" -ForegroundColor Cyan
@@ -46,7 +46,7 @@ function Invoke-SlashCommand {
         "/provider" {
             if ($args) {
                 $prov = $args.ToLower()
-                if ($prov -in @("openrouter", "groq", "orca")) {
+                if ($prov -in @("custom", "groq", "orca")) {
                     $Provider.Value = if ($prov -eq "orca") { "orca" } else { $prov }
                     Set-PSCoderConfig -Updates @{ provider = $prov }
                     Write-InfoPS "Provider changed to: $prov"
@@ -59,17 +59,17 @@ function Invoke-SlashCommand {
                         $Model.Value = "z-ai/glm-5.3-flash-free"
                         Set-PSCoderConfig -Updates @{ model = "z-ai/glm-5.3-flash-free"; orcaModel = "z-ai/glm-5.3-flash-free" }
                     } else {
-                        Write-InfoPS "Default OpenRouter model: stepfun/step-3.5-flash:free"
-                        $Model.Value = "stepfun/step-3.5-flash:free"
-                        Set-PSCoderConfig -Updates @{ model = "stepfun/step-3.5-flash:free" }
+                        Write-InfoPS "Default Custom model: deepseek-v4.1-flash (slop.storo.cloud)"
+                        $Model.Value = "deepseek-v4.1-flash"
+                        Set-PSCoderConfig -Updates @{ model = "deepseek-v4.1-flash" }
                     }
                 } else {
-                    Write-ErrorPS "Invalid provider. Use: openrouter, groq, or orca"
+                    Write-ErrorPS "Invalid provider. Use: custom, groq, or orca"
                 }
             } else {
                 Write-HeaderPS "Current provider: $($Provider.Value)"
                 Write-Host "  Available providers:" -ForegroundColor Gray
-                Write-Host "  - openrouter (GPT, Gemini, Qwen, Llama...)" -ForegroundColor Gray
+                Write-Host "  - custom (custom OpenAI-compatible endpoint: slop.storo.cloud)" -ForegroundColor Gray
                 Write-Host "  - groq (Llama, Mixtral, Gemma, Qwen...)" -ForegroundColor Gray
                 Write-Host "  - orca (Z.AI GLM, GPT, Claude, Gemini via OrcaRouter)" -ForegroundColor Gray
                 Write-Host "  Use /provider <name> to change" -ForegroundColor Gray
@@ -200,7 +200,7 @@ function Show-Help {
     Write-Host "  /new           New conversation (reload memory)" -ForegroundColor Gray
     Write-Host "  /model         Change AI model (e.g., /model openai/gpt-4o)" -ForegroundColor Gray
     Write-Host "  /model         No args: list available models" -ForegroundColor Gray
-    Write-Host "  /provider      Change provider (openrouter/groq)" -ForegroundColor Gray
+    Write-Host "  /provider      Change provider (custom/groq/orca)" -ForegroundColor Gray
     Write-Host "  /provider      No args: show current provider" -ForegroundColor Gray
     Write-Host "  /history       List saved sessions" -ForegroundColor Gray
     Write-Host "  /load <id>     Load a previous session" -ForegroundColor Gray

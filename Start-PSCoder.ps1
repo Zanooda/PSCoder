@@ -1,5 +1,5 @@
 # Start-PSCoder.ps1 - Quick start for PSCoder
-# Usage: .\Start-PSCoder.ps1 [-Model "stepfun/step-3.5-flash:free"] [-Provider "openrouter"]
+# Usage: .\Start-PSCoder.ps1 [-Model "deepseek-v4.1-flash"] [-Provider "custom"]
 
 param(
     [string]$Model,

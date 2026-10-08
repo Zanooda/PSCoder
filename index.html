@@ -816,7 +816,7 @@
             <div class="arch-tree">
                 <span class="dir">API/</span><br>
                 &nbsp;&nbsp;&nbsp;&nbsp;<span class="file">BaseClient.ps1</span> <span class="comment"># Cliente HTTP con reintentos</span><br>
-                &nbsp;&nbsp;&nbsp;&nbsp;<span class="file">OpenRouter.ps1</span> <span class="comment"># Integracion OpenRouter</span><br>
+                &nbsp;&nbsp;&nbsp;&nbsp;<span class="file">Custom.ps1</span> <span class="comment"># Integracion endpoint compatible con OpenAI</span><br>
                 &nbsp;&nbsp;&nbsp;&nbsp;<span class="file">Groq.ps1</span> <span class="comment"># Integracion Groq</span>
             </div>
         </div>
@@ -909,11 +909,11 @@
             <div class="step-number">2</div>
             <div class="step-content">
                 <h3>Configurar tu clave API</h3>
-                <p>Necesitas una clave API de OpenRouter (recomendado) o Groq. Configurala como variable de entorno o interactivamente.</p>
+                <p>Necesitas una clave API para el endpoint personalizado compatible con OpenAI (slop.storo.cloud) o Groq. Configurala como variable de entorno o interactivamente.</p>
                 <div class="code-block">
                     <div class="code-header"><span>PowerShell - Opcion 1: Variable de entorno</span></div>
                     <div class="code-body">
-                        <span class="var">$env</span>:OPENROUTER_API_KEY = <span class="str">"tu-clave-aqui"</span>
+                        <span class="var">$env</span>:SLOP_API_KEY = <span class="str">"tu-clave-aqui"</span>
                     </div>
                 </div>
                 <div class="code-block">
@@ -939,7 +939,7 @@
                         <span class="comment"># O directamente:</span><br>
                         .\Start-PSCoder.ps1<br><br>
                         <span class="comment"># O con modelo especifico:</span><br>
-                        .\Start-PSCoder.ps1 -Model <span class="str">"openai/gpt-4o"</span> -Provider <span class="str">"openrouter"</span>
+                        .\Start-PSCoder.ps1 -Model <span class="str">"deepseek-v4.1-flash"</span> -Provider <span class="str">"custom"</span>
                     </div>
                 </div>
             </div>
@@ -967,7 +967,7 @@
                 <tr><td><code>/clear</code></td><td>Limpia la conversacion actual</td></tr>
                 <tr><td><code>/new</code></td><td>Nueva conversacion (recarga la memoria)</td></tr>
                 <tr><td><code>/model</code></td><td>Cambia el modelo de IA (gpt-4o, gemini, qwen, etc.)</td></tr>
-                <tr><td><code>/provider</code></td><td>Cambia el proveedor (openrouter / groq)</td></tr>
+                <tr><td><code>/provider</code></td><td>Cambia el proveedor (custom / groq / orca)</td></tr>
                 <tr><td><code>/history</code></td><td>Lista las sesiones guardadas</td></tr>
                 <tr><td><code>/load &lt;id&gt;</code></td><td>Carga una sesion anterior por su ID</td></tr>
                 <tr><td><code>/memory</code></td><td>Muestra la memoria a largo plazo</td></tr>
@@ -1072,8 +1072,8 @@
     <div class="features-grid" style="max-width:800px;margin:0 auto;">
         <div class="feature-card fade-in">
             <div class="feature-icon">&#127760;</div>
-            <h3>OpenRouter (Recomendado)</h3>
-            <p>Agregador que da acceso a GPT-4o, Gemini, Llama, Qwen, DeepSeek, Mistral y mas. Incluye modelos gratuitos y de pago. Cambio de modelo en caliente con <code>/model</code>.</p>
+            <h3>Custom (slop.storo.cloud)</h3>
+            <p>Endpoint personalizado compatible con OpenAI. Modelo por defecto: <code>deepseek-v4.1-flash</code>. Cambio de modelo en caliente con <code>/model</code>.</p>
         </div>
         <div class="feature-card fade-in">
             <div class="feature-icon green">&#9889;</div>
@@ -1085,11 +1085,9 @@
         <div class="code-header"><span>Cambio de modelo y proveedor</span></div>
         <div class="code-body">
             <span class="comment"># Cambiar modelo</span><br>
-            /model openai/gpt-4o<br>
-            /model google/gemini-2.5-flash<br>
-            /model qwen/qwen3.6-plus:free<br><br>
+            /model deepseek-v4.1-flash<br><br>
             <span class="comment"># Cambiar proveedor</span><br>
-            /provider openrouter<br>
+            /provider custom<br>
             /provider groq
         </div>
     </div>
@@ -1101,7 +1099,7 @@
         <div class="footer-links">
             <a href="https://github.com/josevdr95new/PSCoder" target="_blank">GitHub</a>
             <a href="https://github.com/josevdr95new/PSCoder/blob/main/LICENSE" target="_blank">Licencia MIT</a>
-            <a href="https://openrouter.ai" target="_blank">OpenRouter</a>
+            <a href="https://slop.storo.cloud" target="_blank">slop.storo.cloud</a>
             <a href="https://groq.com" target="_blank">Groq</a>
         </div>
         <p class="footer-copy">PSCoder &mdash; Asistente de Programacion con IA para PowerShell</p>

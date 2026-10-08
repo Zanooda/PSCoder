@@ -167,7 +167,7 @@ function Start-PSCoder {
                         -MaxTokens $config.maxTokens `
                         -Temperature $config.temperature
                 } else {
-                    $response = Invoke-OpenRouterChat `
+                    $response = Invoke-CustomChat `
                         -Model $model `
                         -Messages $messages `
                         -Tools $toolSchemas `
@@ -413,7 +413,7 @@ function Get-EstimatedCost {
     param(
         [string]$Model,
         [int]$Tokens,
-        [string]$Provider = "openrouter"
+        [string]$Provider = "custom"
     )
 
     # Approximate per-1K-token pricing (input+output blended average)
@@ -493,7 +493,7 @@ function Invoke-AutoCompact {
             } elseif ($Provider -eq "orca") {
                 $summaryResp = Invoke-OrcaRouterChat -Model $Model -Messages $summaryMessages -MaxTokens 512 -Temperature 0.3
             } else {
-                $summaryResp = Invoke-OpenRouterChat -Model $Model -Messages $summaryMessages -MaxTokens 512 -Temperature 0.3
+                $summaryResp = Invoke-CustomChat -Model $Model -Messages $summaryMessages -MaxTokens 512 -Temperature 0.3
             }
             if ($summaryResp -and $summaryResp.choices -and $summaryResp.choices[0].message.content) {
                 $summary = "Previous conversation summary: $($summaryResp.choices[0].message.content)"

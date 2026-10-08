@@ -35,8 +35,6 @@ function Invoke-APIChat {
             $request.ReadWriteTimeout = $Script:RequestTimeoutSec * 1000
             foreach ($key in $Headers.Keys) {
                 if ($key -eq "Authorization") { $request.Headers.Add($key, $Headers[$key]) }
-                elseif ($key -eq "HTTP-Referer") { $request.Headers.Add($key, $Headers[$key]) }
-                elseif ($key -eq "X-OpenRouter-Title") { $request.Headers.Add($key, $Headers[$key]) }
             }
             $bodyBytes = [System.Text.Encoding]::UTF8.GetBytes($jsonBody)
             $request.ContentLength = $bodyBytes.Length
