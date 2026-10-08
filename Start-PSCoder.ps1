@@ -17,6 +17,14 @@ Write-Host "PowerShell $($PSVersionTable.PSVersion) detected" -ForegroundColor G
 
 # Load module
 $scriptDir = Split-Path $MyInvocation.MyCommand.Path -Parent
+
+# Unblock all PowerShell files in this directory tree, so files copied/downloaded
+# from the internet (Zone.Identifier mark) load without being blocked.
+if (Get-Command Unblock-File -ErrorAction SilentlyContinue) {
+    Get-ChildItem -Path $scriptDir -Recurse -File -Include *.ps1, *.psm1, *.psd1 -ErrorAction SilentlyContinue |
+        Unblock-File -ErrorAction SilentlyContinue
+}
+
 Import-Module "$scriptDir\PSCoder.psd1" -Force
 
 # Start PSCoder
