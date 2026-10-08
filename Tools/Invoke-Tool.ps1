@@ -1,6 +1,30 @@
 # Invoke-Tool.ps1 - Thin dispatcher that routes tool calls to individual tool files
 # Each tool has its own file in Tools/ directory
 
+# Blocks overwriting/editing an existing file that was not read this session,
+# or that changed on disk since it was read. Returns an error string, or $null if OK.
+function Test-ReadBeforeWrite {
+    param(
+        [string]$Path,
+        [string]$WorkingDir,
+        [hashtable]$ReadFileState
+    )
+    if (-not $Path) { return $null }
+    $abs = if (Test-IsPathRooted $Path) { $Path } else { Join-Path $WorkingDir $Path }
+    if (-not (Test-Path $abs)) { return $null }   # creating a new file is allowed
+    if (-not $ReadFileState -or -not $ReadFileState.ContainsKey($abs)) {
+        return "ERROR: '$Path' already exists and has not been read this session. Use read_file first, then write/edit it."
+    }
+    try {
+        $current = (Get-Item $abs).LastWriteTime
+        $seen = $ReadFileState[$abs].mtime
+        if ($seen -and $current -ne $seen) {
+            return "ERROR: '$Path' changed on disk since it was read. Read it again before writing."
+        }
+    } catch {}
+    return $null
+}
+
 function Invoke-PSCoderTool {
     param(
         [Parameter(Mandatory)][string]$ToolName,
@@ -16,9 +40,13 @@ function Invoke-PSCoderTool {
             return Invoke-ToolReadFile -Path $Arguments.path -WorkingDir $WorkingDir
         }
         "write_file" {
+            $guard = Test-ReadBeforeWrite -Path $Arguments.path -WorkingDir $WorkingDir -ReadFileState $ReadFileState
+            if ($guard) { return $guard }
             return Invoke-ToolWriteFile -Path $Arguments.path -Content $Arguments.content -WorkingDir $WorkingDir
         }
         "edit_file" {
+            $guard = Test-ReadBeforeWrite -Path $Arguments.path -WorkingDir $WorkingDir -ReadFileState $ReadFileState
+            if ($guard) { return $guard }
             return Invoke-ToolEditFile -Path $Arguments.path -OldText $Arguments.oldText -NewText $Arguments.newText -WorkingDir $WorkingDir
         }
         "search_files" {

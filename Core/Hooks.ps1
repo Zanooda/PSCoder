@@ -13,15 +13,19 @@ function Initialize-Hooks {
     if (-not (Test-Path $preToolFile)) {
         @"
 # PreToolUse hook - runs BEFORE each tool execution
-# Return $true to allow, $false to block
+# Return `$true to allow, `$false to block
 # Variables available: `$ToolName, `$ToolInput, `$SessionId
+#
+# This is a USER hook. It runs with your privileges, so keep it short and trust nothing
+# but the values you expect. The built-in permission check (Core/Permissions.ps1) is the
+# primary gate; use this only for additional, project-specific policy.
 
-# Example: block dangerous commands
+# Example: block recursive deletes
 # if (`$ToolName -eq "execute_powershell" -and `$ToolInput.command -match "Remove-Item.*-Recurse") {
-#     return $false
+#     return `$false
 # }
 
-return $true
+return `$true
 "@ | Set-Content -Path $preToolFile -Encoding UTF8
     }
 
@@ -41,13 +45,16 @@ return $true
         @"
 # Stop hook - runs at the end of each turn
 # Variables available: `$AssistantMessage, `$SessionId
+#
+# WARNING: never copy text out of a turn into memory automatically. Assistant and
+# tool output may contain untrusted (web/file) text, and memory is re-injected into
+# every system prompt. Only persist information the USER explicitly provided, and
+# never persist secrets (keys, tokens, passwords).
 
-# Example: extract key info from conversation
-# `$msg = `$AssistantMessage
-# if (`$msg -match "IMPORTANT: (.+)") {
-#     Add-PSCoderMemoryNote -Note `$Matches[1]
-# }
+# Example: append a timestamped line to a local log
+# Add-Content -Path "`$env:TEMP\pscoder_turns.log" -Value ("[" + (Get-Date -Format 'HH:mm:ss') + "] turn ended")
 
+return
 "@ | Set-Content -Path $stopFile -Encoding UTF8
     }
 }

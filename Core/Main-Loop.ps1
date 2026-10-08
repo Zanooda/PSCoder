@@ -286,13 +286,15 @@ function Start-PSCoder {
                             Invoke-PostToolUseHook -ToolName $toolName -ToolInput $toolArgs -ToolOutput $result -IsError $false -SessionId $sessionId
                         }
 
-                        # Track read files for read-before-write enforcement
-                        if ($toolName -eq "read_file" -and $toolArgs.path) {
+                        # Track file state for read-before-write enforcement (reads and our own writes)
+                        if (($toolName -in @("read_file", "write_file", "edit_file")) -and $toolArgs.path -and $result -notmatch "^ERROR") {
                             $absPath = if (Test-IsPathRooted $toolArgs.path) { $toolArgs.path } else { Join-Path $workingDir $toolArgs.path }
                             try {
-                                $readFileState[$absPath] = @{
-                                    mtime = (Get-Item $absPath).LastWriteTime
-                                    content = if ($result.Length -gt 1000) { $result.Substring(0, 1000) } else { $result }
+                                if (Test-Path $absPath) {
+                                    $readFileState[$absPath] = @{
+                                        mtime = (Get-Item $absPath).LastWriteTime
+                                        content = if ($result.Length -gt 1000) { $result.Substring(0, 1000) } else { $result }
+                                    }
                                 }
                             } catch {}
                         }

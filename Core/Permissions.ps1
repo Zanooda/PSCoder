@@ -127,36 +127,40 @@ function Test-ToolNeedsApproval {
     # Step 7: Default mode - Read is auto, others need approval
     if ($level -eq "Read") { return $false }
 
-    # Special case: safe PS commands
+    # Special case: execute_powershell
     if ($ToolName -eq "execute_powershell" -and $Arguments.command) {
         $cmd = $Arguments.command.Trim()
+
+        # 1) Dangerous patterns FIRST, matched over the WHOLE command so that
+        #    pipes/chains and aliases are covered (never auto-approve these).
+        $dangerousPatterns = @(
+            'remove-item', '\bri\b', '\brm\b', '\brd\b', '\bdel\b', '\berase\b', '\brmdir\b',
+            'clear-content', 'move-item', 'remove-itemproperty', 'remove-psdrive', 'clear-recyclebin',
+            'stop-process', '\bkill\b', '\bspps\b', 'stop-computer', 'restart-computer', '\bshutdown\b',
+            'stop-service', 'set-service', 'new-service',
+            'format-volume', 'format-disk', 'format-computer', 'clear-disk', 'diskpart',
+            'set-executionpolicy', 'invoke-expression', '\biex\b', 'invoke-command', '-encodedcommand',
+            'start-process.*-verb\s+runas', '\brunas\b',
+            'schtasks', 'bcdedit', 'vssadmin', 'wevtutil', 'cipher\s+/w',
+            'set-mppreference', 'add-mppreference', 'enable-psremoting',
+            '\breg\b\s+(add|delete|import|restore)', 'set-itemproperty.*hklm', 'new-itemproperty.*hklm',
+            'icacls', 'takeown', '\bnet\s+user\b', '\bnet\s+localgroup\b', 'new-localuser', 'add-localgroupmember',
+            'invoke-webrequest.*-outfile', 'start-bitstransfer',
+            'new-item.*-itemtype\s+symboliclink', 'add-type', 'frombase64string',
+            '\|\s*(iex|invoke-expression)'
+        )
+        foreach ($pattern in $dangerousPatterns) {
+            if ($cmd -match "(?i)$pattern") { return $true }
+        }
+
+        # 2) Read-only safe prefixes auto-approve ONLY if no dangerous pattern matched above.
         foreach ($safe in $Script:SafeCommands) {
             if ($cmd.StartsWith($safe, [System.StringComparison]::OrdinalIgnoreCase)) {
                 return $false
             }
         }
-        if ($cmd -match "^(ls|dir|cat|type|pwd|echo|date|whoami|tree|cls|clear)") {
+        if ($cmd -match "^(ls|dir|cat|type|pwd|echo|date|whoami|tree|cls|clear)\b") {
             return $false
-        }
-
-        # Dangerous command detection - ALWAYS require approval
-        $dangerousPatterns = @(
-            "Remove-Item", "rm ", "del ", "rmdir",
-            "Stop-Process", "kill",
-            "Format-Volume", "Format-Disk",
-            "Clear-Disk",
-            "Set-ExecutionPolicy",
-            "Invoke-Expression", "iex ",
-            "Invoke-WebRequest.*-OutFile.*\.(exe|bat|cmd|ps1)",
-            "New-Item.*-ItemType.*SymbolicLink",
-            "icacls.*\/grant",
-            "net user.*\/add",
-            "net localgroup.*\/add"
-        )
-        foreach ($pattern in $dangerousPatterns) {
-            if ($cmd -match "(?i)$pattern") {
-                return $true
-            }
         }
     }
 
