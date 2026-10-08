@@ -8,7 +8,7 @@ function Invoke-ToolReadFile {
     )
 
     if (-not $Path) { return "ERROR: No path provided" }
-    if (-not [System.IO.Path]::IsPathRooted($Path)) { $Path = Join-Path $WorkingDir $Path }
+    if (-not (Test-IsPathRooted $Path)) { $Path = Join-Path $WorkingDir $Path }
     if (-not (Test-Path $Path)) { return "ERROR: File does not exist: $Path" }
     try {
         $content = Get-Content -Path $Path -Raw -Encoding UTF8

@@ -67,6 +67,14 @@ AI-powered coding assistant that runs in your PowerShell terminal. Uses a custom
 - PowerShell 5.1 or later (Windows 10/11)
 - An API key for the custom OpenAI-compatible endpoint (https://slop.storo.cloud/v1) or [Groq](https://groq.com)
 
+### Language mode
+PSCoder runs in both **FullLanguage** and **ConstrainedLanguage** mode. On machines
+with an application control policy (WDAC / AppLocker), PowerShell starts in
+`ConstrainedLanguage` mode, where .NET APIs are unavailable; PSCoder uses cmdlets
+and allowed types only, so the assistant, tools, and web access still work. The only
+features that are disabled in that mode are Windows speech (SAPI/COM) and OCR
+(WinRT), which require FullLanguage.
+
 ### Setup
 ```powershell
 # Clone the repository

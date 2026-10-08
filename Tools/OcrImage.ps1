@@ -6,6 +6,9 @@ $Script:OcrAvailable = $false
 $Script:OcrLanguages = @()
 
 function Initialize-OcrEngine {
+    if ($Script:PSCoderConstrained) {
+        return @{ available = $false; error = "OCR requires Full Language Mode; it is unavailable under an application control policy (ConstrainedLanguage)." }
+    }
     try {
         Add-Type -AssemblyName System.Runtime.WindowsRuntime -ErrorAction SilentlyContinue
         $null = [Windows.Storage.StorageFile, Windows.Storage, ContentType = WindowsRuntime]
@@ -66,8 +69,13 @@ function Invoke-OcrImage {
         [string]$Language = ""
     )
 
+    # OCR is .NET/WinRT based and cannot run under ConstrainedLanguage mode.
+    if ($Script:PSCoderConstrained) {
+        return "ERROR: OCR is unavailable in ConstrainedLanguage mode (it requires Full Language Mode)."
+    }
+
     # Resolve path
-    if (-not [System.IO.Path]::IsPathRooted($Path)) {
+    if (-not (Test-IsPathRooted $Path)) {
         $Path = Join-Path (Get-Location).Path $Path
     }
 
@@ -75,7 +83,8 @@ function Invoke-OcrImage {
         return "ERROR: Image file not found: $Path"
     }
 
-    $ext = [System.IO.Path]::GetExtension($Path).ToLower()
+    $ext = ""
+    if ($Path -match '\.([^.\/\\]+)$') { $ext = "." + $Matches[1].ToLower() }
     $supportedExts = @('.png', '.jpg', '.jpeg', '.bmp', '.gif', '.tiff', '.tif', '.webp')
     if ($ext -notin $supportedExts) {
         return "ERROR: Unsupported image format: $ext. Supported: $($supportedExts -join ', ')"

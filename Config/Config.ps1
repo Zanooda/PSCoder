@@ -25,6 +25,22 @@ $Script:DefaultConfig = @{
     toolsEnabled    = $true
 }
 
+# ---------------------------------------------------------------------------
+# CLM-safe helpers.
+# System.Math and System.IO.Path are not available in ConstrainedLanguage mode,
+# so these wrap the operations the codebase needs using allowed types only.
+# ---------------------------------------------------------------------------
+function Get-MinInt { param([int]$A, [int]$B) if ($A -lt $B) { return $A } else { return $B } }
+function Get-MaxInt { param([int]$A, [int]$B) if ($A -gt $B) { return $A } else { return $B } }
+function Get-Floor  { param([double]$Value) $i = [int]$Value; if ($Value -lt $i) { $i-- }; return $i }
+function Get-Ceil   { param([double]$Value) $i = [int]$Value; if ($Value -gt $i) { $i++ }; return $i }
+
+function Test-IsPathRooted {
+    param([string]$Path)
+    if ([string]::IsNullOrEmpty($Path)) { return $false }
+    return ($Path -match '^(?:[A-Za-z]:[\\/]|\\\\|/)')
+}
+
 function Convert-PSObjectToHashtable {
     param([Parameter(ValueFromPipeline)]$InputObject)
     process {

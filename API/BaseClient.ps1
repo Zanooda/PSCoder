@@ -1,11 +1,7 @@
 # BaseClient.ps1 - Shared HTTP client logic for API providers
-# Enhanced with exponential backoff + Retry-After header support (from claurst)
-
-try {
-    [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12 -bor [Net.SecurityProtocolType]::Tls13
-} catch {
-    [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
-}
+# Uses Invoke-RestMethod (a cmdlet) instead of .NET HTTP classes, so it works in
+# both FullLanguage and ConstrainedLanguage mode.
+# Retry logic: exponential backoff with Retry-After support.
 
 $Script:MaxRetries = 5
 $Script:InitialBackoffMs = 1000
@@ -28,26 +24,9 @@ function Invoke-APIChat {
 
     while ($true) {
         try {
-            $request = [System.Net.HttpWebRequest]::Create($Uri)
-            $request.Method = "POST"
-            $request.ContentType = "application/json; charset=utf-8"
-            $request.Timeout = $Script:RequestTimeoutSec * 1000
-            $request.ReadWriteTimeout = $Script:RequestTimeoutSec * 1000
-            foreach ($key in $Headers.Keys) {
-                if ($key -eq "Authorization") { $request.Headers.Add($key, $Headers[$key]) }
-            }
-            $bodyBytes = [System.Text.Encoding]::UTF8.GetBytes($jsonBody)
-            $request.ContentLength = $bodyBytes.Length
-            $reqStream = $request.GetRequestStream()
-            $reqStream.Write($bodyBytes, 0, $bodyBytes.Length)
-            $reqStream.Close()
-            $webResponse = $request.GetResponse()
-            $respStream = $webResponse.GetResponseStream()
-            $reader = New-Object System.IO.StreamReader($respStream, [System.Text.Encoding]::UTF8)
-            $rawJson = $reader.ReadToEnd()
-            $reader.Close()
-            $webResponse.Close()
-            $response = $rawJson | ConvertFrom-Json
+            $response = Invoke-RestMethod -Uri $Uri -Method Post -Headers $Headers `
+                -Body $jsonBody -ContentType "application/json; charset=utf-8" `
+                -TimeoutSec $Script:RequestTimeoutSec
             Write-PSCoderLog -Level "DEBUG" -Message "$ProviderName API call successful" -Source "BaseClient"
             return $response
         }
@@ -56,27 +35,16 @@ function Invoke-APIChat {
             $statusCode = 0
             $retryAfterSec = 0
 
-            # Extract status code and Retry-After header
-            try {
-                if ($_.Exception.Response) {
-                    $statusCode = [int]$_.Exception.Response.StatusCode
-                    $retryAfterHeader = $_.Exception.Response.Headers["Retry-After"]
-                    if ($retryAfterHeader) {
-                        $retryAfterSec = [int]$retryAfterHeader
-                    }
-                }
-            } catch {}
+            # Status code: parse from the message (reading Exception.Response is not
+            # available in ConstrainedLanguage mode).
+            if ($errorMsg -match '\b(4\d\d|5\d\d)\b') { $statusCode = [int]$Matches[1] }
 
-            # Parse error body for better messages
+            # Prefer the API's own error message when present.
             try {
-                if ($_.Exception.Response -and $_.Exception.Response.GetResponseStream()) {
-                    $reader = [System.IO.StreamReader]::new($_.Exception.Response.GetResponseStream())
-                    $errorBody = $reader.ReadToEnd()
-                    $reader.Dispose()
-                    $errorJson = $errorBody | ConvertFrom-Json
-                    if ($errorJson.error.message) {
-                        $errorMsg = $errorJson.error.message
-                    }
+                if ($_.ErrorDetails -and $_.ErrorDetails.Message) {
+                    $errorJson = $_.ErrorDetails.Message | ConvertFrom-Json
+                    if ($errorJson.error.message) { $errorMsg = $errorJson.error.message }
+                    elseif ($errorJson.message) { $errorMsg = $errorJson.message }
                 }
             } catch {}
 
@@ -92,15 +60,12 @@ function Invoke-APIChat {
             if ($isRetryable -and $retryCount -lt $Script:MaxRetries) {
                 $retryCount++
 
-                # Use Retry-After header if present, otherwise exponential backoff
-                if ($retryAfterSec -gt 0) {
-                    $waitMs = $retryAfterSec * 1000
-                } else {
-                    $waitMs = $backoffMs
-                    $backoffMs = [Math]::Min($backoffMs * 2, $Script:MaxBackoffMs)
-                }
+                # Exponential backoff (Retry-After header is not read in CLM).
+                $waitMs = $backoffMs
+                $backoffMs = $backoffMs * 2
+                if ($backoffMs -gt $Script:MaxBackoffMs) { $backoffMs = $Script:MaxBackoffMs }
 
-                $waitSec = [Math]::Round($waitMs / 1000, 1)
+                $waitSec = [int]($waitMs / 1000)
                 Write-PSCoderLog -Level "WARN" -Message "$ProviderName retry $retryCount/$Script:MaxRetries after ${waitSec}s (status: $statusCode)" -Source "BaseClient"
                 Write-InfoPS "$ProviderName rate limited/error. Retrying in ${waitSec}s (attempt $retryCount/$Script:MaxRetries)..."
                 Start-Sleep -Milliseconds $waitMs

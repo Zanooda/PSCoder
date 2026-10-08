@@ -9,7 +9,7 @@ function Invoke-ToolWriteFile {
     )
 
     if (-not $Path) { return "ERROR: No path provided" }
-    if (-not [System.IO.Path]::IsPathRooted($Path)) { $Path = Join-Path $WorkingDir $Path }
+    if (-not (Test-IsPathRooted $Path)) { $Path = Join-Path $WorkingDir $Path }
     $exists = Test-Path $Path
     try {
         $dir = Split-Path $Path -Parent

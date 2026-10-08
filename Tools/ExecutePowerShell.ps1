@@ -20,14 +20,19 @@ function Invoke-ToolExecutePowerShell {
     $timeoutSec = if ($isExpensive) { 60 } else { 30 }
 
     try {
-        $tmpFile = [System.IO.Path]::GetTempFileName() + ".ps1"
-        $outFile = [System.IO.Path]::GetTempFileName() + ".out"
-        $errFile = [System.IO.Path]::GetTempFileName() + ".err"
+        # Temp dir (System.IO.Path is unavailable in ConstrainedLanguage mode)
+        $tempDir = $env:TEMP
+        if (-not $tempDir) { $tempDir = $env:TMP }
+        if (-not $tempDir) { $tempDir = (Get-Location).Path }
 
-        # Wrap command with timeout and output capture
+        $tmpBase = Join-Path $tempDir ("pscoder_" + [guid]::NewGuid().ToString('N'))
+        $tmpFile = "$tmpBase.ps1"
+        $outFile = "$tmpBase.out"
+        $errFile = "$tmpBase.err"
+
+        # Wrap command with output capture
         $wrapper = @"
 `$ErrorActionPreference = 'Continue'
-`$OutputEncoding = [System.Text.Encoding]::UTF8
 try {
     `$result = & { $Command } 2>&1
     if (`$result) {
@@ -40,20 +45,22 @@ try {
         Set-Content -Path $tmpFile -Value $wrapper -Encoding UTF8
 
         $psExe = Join-Path $PSHOME "powershell.exe"
+        if (-not (Test-Path $psExe)) { $psExe = Join-Path $PSHOME "pwsh.exe" }
+        if (-not (Test-Path $psExe)) { $psExe = Join-Path $PSHOME "pwsh" }
         if (-not (Test-Path $psExe)) { $psExe = "powershell" }
 
         $procArgs = @{
             FilePath = $psExe
-            ArgumentList = "-NoProfile -ExecutionPolicy Bypass -WindowStyle Hidden -File `"$tmpFile`""
-            WindowStyle = "Hidden"
+            ArgumentList = "-NoProfile -ExecutionPolicy Bypass -File `"$tmpFile`""
             PassThru = $true
         }
+        if ($env:OS -eq "Windows_NT") { $procArgs.WindowStyle = "Hidden" }
         $proc = Start-Process @procArgs
 
-        # Wait with timeout
-        $finished = $proc.WaitForExit($timeoutSec * 1000)
+        # Wait with timeout (WaitForExit() is a method call, unavailable in CLM)
+        Wait-Process -Id $proc.Id -Timeout $timeoutSec -ErrorAction SilentlyContinue
 
-        if (-not $finished) {
+        if (Get-Process -Id $proc.Id -ErrorAction SilentlyContinue) {
             # Timeout - kill the process
             Stop-Process -Id $proc.Id -Force -ErrorAction SilentlyContinue
             Remove-Item $tmpFile -Force -ErrorAction SilentlyContinue

@@ -40,20 +40,9 @@ function Format-Content {
             }
         }
         "xml" {
-            try {
-                $xml = [xml]$Content
-                $sw = New-Object System.IO.StringWriter
-                $writer = New-Object System.Xml.XmlTextWriter($sw)
-                $writer.Formatting = [System.Xml.Formatting]::Indented
-                $xml.WriteContentTo($writer)
-                $writer.Flush()
-                $formatted = $sw.ToString()
-                if ($formatted.Length -gt $MaxChars) { $formatted = $formatted.Substring(0, $MaxChars) + "`n... (truncated)" }
-                $output = $formatted
-            } catch {
-                if ($Content.Length -gt $MaxChars) { $output = $Content.Substring(0, $MaxChars) + "`n... (truncated)" }
-                else { $output = $Content }
-            }
+            # Pretty-printing via System.Xml.XmlTextWriter is unavailable in ConstrainedLanguage mode.
+            if ($Content.Length -gt $MaxChars) { $output = $Content.Substring(0, $MaxChars) + "`n... (truncated)" }
+            else { $output = $Content }
         }
         "markdown" {
             if ($Tokens -gt 0) {
@@ -89,7 +78,7 @@ function Invoke-WebFetch {
         $formatted = Format-Content -Content $cached.content -ContentType $cached.contentType -MaxChars $MaxChars -Tokens $cached.tokens
         $result = "Fetched (cached): $Url`n"
         $result += "-" * 60 + "`n"
-        $result += "Type: $($cached.contentType) | Size: $([Math]::Round($cached.size / 1KB, 1))KB"
+        $result += "Type: $($cached.contentType) | Size: $(([double]($cached.size / 1KB)).ToString('F1'))KB"
         if ($cached.tokens -gt 0) { $result += " | Tokens: ~$($cached.tokens)" }
         $result += "`n" + "-" * 60 + "`n"
         $result += $formatted
@@ -129,10 +118,10 @@ function Invoke-WebFetch {
 
         $result = "Fetched: $Url`n"
         $result += "-" * 60 + "`n"
-        $result += "Type: $detectedType | Size: $([Math]::Round($contentSize / 1KB, 1))KB | Time: $($fetchTime.ToString('F2'))s"
+        $result += "Type: $detectedType | Size: $(([double]($contentSize / 1KB)).ToString('F1'))KB | Time: $($fetchTime.ToString('F2'))s"
         if ($tokenCount -gt 0) {
-            $htmlTokens = [Math]::Round($tokenCount * 5)
-            $savings = [Math]::Round((1 - ($tokenCount / $htmlTokens)) * 100)
+            $htmlTokens = [int]($tokenCount * 5)
+            $savings = [int]((1 - ($tokenCount / $htmlTokens)) * 100)
             $result += " | Tokens: ~$tokenCount (saved ~$savings% vs HTML)"
         }
         $result += "`nStatus: $statusCode`n" + "-" * 60 + "`n"
@@ -140,33 +129,12 @@ function Invoke-WebFetch {
         return $result
     }
     catch {
-        try {
-            $webClient = New-Object System.Net.WebClient
-            $webClient.Encoding = [System.Text.Encoding]::UTF8
-            $webClient.Headers.Add("User-Agent", $headers["User-Agent"])
-            $webClient.Headers.Add("Accept", $headers["Accept"])
-            $webClient.Headers.Add("Accept-Language", $headers["Accept-Language"])
-            $content = $webClient.DownloadString($Url)
-            $contentType = $webClient.ResponseHeaders["Content-Type"]
-            $webClient.Dispose()
-            $fetchTime = ((Get-Date) - $fetchStart).TotalSeconds
-            $detectedType = Detect-ContentType -Content $content -ContentType $contentType
-            $contentSize = $content.Length
-            $formatted = Format-Content -Content $content -ContentType $detectedType -MaxChars $MaxChars
-            Set-Cache -Namespace "fetch" -Key $Url -Data @{ content = $content; contentType = $detectedType; size = $contentSize; tokens = 0 } -ContentType $detectedType
-            $result = "Fetched: $Url`n" + "-" * 60 + "`n"
-            $result += "Type: $detectedType | Size: $([Math]::Round($contentSize / 1KB, 1))KB | Time: $($fetchTime.ToString('F2'))s`n"
-            $result += "-" * 60 + "`n" + $formatted
-            return $result
-        }
-        catch {
-            $errorMsg = $_.Exception.Message
-            if ($errorMsg -match "403|Forbidden") { return "Error: Access denied (403). Site blocks automated requests." }
-            elseif ($errorMsg -match "404|Not Found") { return "Error: Page not found (404). Check the URL." }
-            elseif ($errorMsg -match "timeout|tiempo") { return "Error: Timeout. Site is taking too long to respond." }
-            elseif ($errorMsg -match "conexion|connection|DNS") { return "Error: Could not connect. Check your internet connection and URL." }
-            else { return "Error fetching URL: $errorMsg" }
-        }
+        $errorMsg = $_.Exception.Message
+        if ($errorMsg -match "403|Forbidden") { return "Error: Access denied (403). Site blocks automated requests." }
+        elseif ($errorMsg -match "404|Not Found") { return "Error: Page not found (404). Check the URL." }
+        elseif ($errorMsg -match "timeout|tiempo") { return "Error: Timeout. Site is taking too long to respond." }
+        elseif ($errorMsg -match "conexion|connection|DNS") { return "Error: Could not connect. Check your internet connection and URL." }
+        else { return "Error fetching URL: $errorMsg" }
     }
 }
 
@@ -203,17 +171,7 @@ function Clean-HtmlContent {
         $text = [regex]::Replace($text, "<$tag[^>]*>", "`n", 'IgnoreCase')
     }
     $text = [regex]::Replace($text, '<[^>]+>', ' ')
-    try { $text = [System.Web.HttpUtility]::HtmlDecode($text) } catch {}
-    $entities = @{
-        '&nbsp;' = ' '; '&amp;' = '&'; '&lt;' = '<'; '&gt;' = '>'; '&quot;' = '"'
-        '&#39;' = "'"; '&mdash;' = '-'; '&ndash;' = '-'; '&hellip;' = '...'
-        '&laquo;' = '<<'; '&raquo;' = '>>'; '&copy;' = '(c)'; '&reg;' = '(R)'
-        '&trade;' = '(TM)'; '&#8211;' = '-'; '&#8212;' = '--'; '&#8216;' = "'"
-        '&#8217;' = "'"; '&#8220;' = '"'; '&#8221;' = '"'; '&#8230;' = '...'
-    }
-    foreach ($entity in $entities.GetEnumerator()) {
-        $text = $text -replace [regex]::Escape($entity.Key), $entity.Value
-    }
+    $text = Convert-HtmlEntities $text
     $lines = $text -split "`n"
     $cleanLines = @()
     foreach ($line in $lines) {
@@ -233,10 +191,27 @@ function Clean-HtmlContent {
 
 function Clean-Text {
     param([string]$Text)
-    $text = [System.Web.HttpUtility]::HtmlDecode($Text)
+    $text = Convert-HtmlEntities $Text
     $text = [regex]::Replace($text, '<[^>]+>', ' ')
     $text = [regex]::Replace($text, '\s+', ' ')
     return $text.Trim()
 }
 
-Add-Type -AssemblyName System.Web -ErrorAction SilentlyContinue
+# HTML entity decoder (System.Web.HttpUtility is unavailable in ConstrainedLanguage mode).
+function Convert-HtmlEntities {
+    param([string]$Text)
+    if ([string]::IsNullOrEmpty($Text)) { return $Text }
+    $entities = @{
+        '&nbsp;' = ' '; '&amp;' = '&'; '&lt;' = '<'; '&gt;' = '>'; '&quot;' = '"'
+        '&#39;' = "'"; '&#039;' = "'"; '&apos;' = "'"; '&mdash;' = '-'; '&ndash;' = '-'
+        '&hellip;' = '...'; '&laquo;' = '<<'; '&raquo;' = '>>'; '&copy;' = '(c)'
+        '&reg;' = '(R)'; '&trade;' = '(TM)'; '&lsquo;' = "'"; '&rsquo;' = "'"
+        '&ldquo;' = '"'; '&rdquo;' = '"'; '&middot;' = '.'
+    }
+    foreach ($entity in $entities.GetEnumerator()) {
+        $Text = $Text -replace [regex]::Escape($entity.Key), $entity.Value
+    }
+    $Text = [regex]::Replace($Text, '&#x([0-9a-fA-F]+);', { param($m) [char][int]::Parse($m.Groups[1].Value, 'HexNumber') })
+    $Text = [regex]::Replace($Text, '&#(\d+);', { param($m) [char][int]$m.Groups[1].Value })
+    return $Text
+}

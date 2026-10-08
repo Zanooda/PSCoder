@@ -103,7 +103,7 @@ function Write-StatusBar {
 
 function Write-ConfirmDialog {
     param([string]$Message)
-    $width = [Math]::Max($Message.Length + 10, 50)
+    $width = Get-MaxInt ($Message.Length + 10) 50
 
     Write-Host ""
     Write-Host " $('-' * ($width - 2))" -ForegroundColor $Script:Colors.Border

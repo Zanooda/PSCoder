@@ -22,7 +22,7 @@ function Start-PSCoder {
     # Token budget configuration
     $contextWindow = 128000
     $compactThreshold = 0.85
-    $autoCompactThreshold = [Math]::Floor($contextWindow * $compactThreshold)
+    $autoCompactThreshold = Get-Floor ($contextWindow * $compactThreshold)
     $toolResultBudget = 5000
     $maxToolResultsPerTurn = 20
     $sessionId = $chainId
@@ -82,7 +82,11 @@ function Start-PSCoder {
 
         # Slash commands
         if ($userInput.StartsWith("/")) {
-            $action = Invoke-SlashCommand -Command $userInput -Model ([ref]$model) -Messages ([ref]$messages) -Provider ([ref]$provider)
+            $state = @{ Model = $model; Provider = $provider; Messages = $messages }
+            $action = Invoke-SlashCommand -Command $userInput -State $state
+            $model = $state.Model
+            $provider = $state.Provider
+            $messages = $state.Messages
             switch ($action) {
                 "exit" {
                     Invoke-StopHook -AssistantMessage "Session ended" -SessionId $sessionId
@@ -300,7 +304,7 @@ function Start-PSCoder {
 
                         # Track read files for read-before-write enforcement
                         if ($toolName -eq "read_file" -and $toolArgs.path) {
-                            $absPath = if ([System.IO.Path]::IsPathRooted($toolArgs.path)) { $toolArgs.path } else { Join-Path $workingDir $toolArgs.path }
+                            $absPath = if (Test-IsPathRooted $toolArgs.path) { $toolArgs.path } else { Join-Path $workingDir $toolArgs.path }
                             try {
                                 $readFileState[$absPath] = @{
                                     mtime = (Get-Item $absPath).LastWriteTime
@@ -327,7 +331,8 @@ function Start-PSCoder {
 
                         # Truncate large tool results (tool result budget)
                         if ($result.Length -gt $toolResultBudget) {
-                            $truncatedResult = $result.Substring(0, $toolResultBudget) + "`n... (output truncated, $([Math]::Round($result.Length/1KB, 1))KB total)"
+                            $kbTotal = [double]$result.Length / 1024
+                            $truncatedResult = $result.Substring(0, $toolResultBudget) + "`n... (output truncated, $($kbTotal.ToString('F1'))KB total)"
                             $tempFile = Join-Path $env:TEMP "pscoder_tool_result_$([guid]::NewGuid().ToString().Substring(0,8)).txt"
                             $result | Set-Content -Path $tempFile -Encoding UTF8
                             $truncatedResult += "`nFull output saved to: $tempFile"
@@ -402,7 +407,7 @@ function Estimate-MessageTokens {
             $totalChars += ($msg.tool_calls | ConvertTo-Json -Depth 5 -Compress).Length
         }
     }
-    return [Math]::Ceiling($totalChars / 4)
+    return Get-Ceil ($totalChars / 4)
 }
 
 # ============================================================

@@ -1,16 +1,32 @@
 #Requires -Version 5.1
 # PSCoder.psm1 - Main module for PSCoder
 
-# Configure UTF-8 encoding for special characters
-try { chcp 65001 | Out-Null } catch {}
-[Console]::OutputEncoding = [System.Text.Encoding]::UTF8
-[Console]::InputEncoding = [System.Text.Encoding]::UTF8
-$OutputEncoding = [System.Text.Encoding]::UTF8
-$PSDefaultParameterValues['*:Encoding'] = 'utf8'
+# Detect the PowerShell language mode. Under an application control policy
+# (WDAC / AppLocker) PowerShell runs in ConstrainedLanguage mode, where most
+# .NET types (System.Net, System.IO, System.Math, Add-Type, COM, ...) are not
+# available. PSCoder is written to work in both modes: everything uses cmdlets
+# and ConstrainedLanguage-allowed types. A few optional features (speech, OCR)
+# degrade gracefully when .NET is unavailable.
+$Script:PSCoderLanguageMode = $ExecutionContext.SessionState.LanguageMode
+$Script:PSCoderConstrained = ($Script:PSCoderLanguageMode -ne 'FullLanguage')
 
-# Load shared assemblies once
-[Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12 -bor [Net.SecurityProtocolType]::Tls13
-Add-Type -AssemblyName System.Web -ErrorAction SilentlyContinue
+if ($Script:PSCoderConstrained) {
+    Write-Warning "PSCoder: PowerShell is in $($Script:PSCoderLanguageMode) mode (application control policy). Running with cmdlet-only features; speech and OCR are disabled."
+}
+
+# Configure UTF-8 encoding for special characters (skipped in ConstrainedLanguage mode)
+try { chcp 65001 | Out-Null } catch {}
+if (-not $Script:PSCoderConstrained) {
+    try {
+        [Console]::OutputEncoding = [System.Text.Encoding]::UTF8
+        [Console]::InputEncoding = [System.Text.Encoding]::UTF8
+        $OutputEncoding = [System.Text.Encoding]::UTF8
+    } catch {}
+    try {
+        [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12 -bor [Net.SecurityProtocolType]::Tls13
+    } catch {}
+}
+$PSDefaultParameterValues['*:Encoding'] = 'utf8'
 
 $PSScriptRoot_ = Split-Path $MyInvocation.MyCommand.Path -Parent
 

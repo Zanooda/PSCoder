@@ -47,7 +47,7 @@ function Search-Brave {
             if (-not $url) { continue }
 
             $count++
-            $results += [PSCustomObject]@{
+            $results += [ordered]@{
                 position    = $count
                 title       = $title
                 url         = $url
@@ -109,7 +109,7 @@ function Search-DuckDuckGoHtml {
 
         $rawUrl = $tl.Groups[1].Value
         $title = [regex]::Replace($tl.Groups[2].Value, '<[^>]+>', '')
-        try { $title = [System.Web.HttpUtility]::HtmlDecode($title).Trim() } catch { $title = $title.Trim() }
+        $title = (Convert-HtmlEntities $title).Trim()
 
         # Decode DDG redirect URLs (uddg=...)
         $decodedUrl = Decode-DuckDuckGoUrl -RawUrl $rawUrl
@@ -125,11 +125,11 @@ function Search-DuckDuckGoHtml {
         $snippet = ""
         if ($snippets.Count -gt $count) {
             $snippet = [regex]::Replace($snippets[$count].Groups[1].Value, '<[^>]+>', '')
-            try { $snippet = [System.Web.HttpUtility]::HtmlDecode($snippet).Trim() } catch { $snippet = $snippet.Trim() }
+            $snippet = (Convert-HtmlEntities $snippet).Trim()
         }
 
         $count++
-        $results += [PSCustomObject]@{
+        $results += [ordered]@{
             position    = $count
             title       = $title
             url         = $decodedUrl
@@ -189,7 +189,7 @@ function Search-DuckDuckGoInstant {
 
     if ($response.Abstract -and $response.Abstract.Trim().Length -gt 0) {
         $count++
-        $results += [PSCustomObject]@{
+        $results += [ordered]@{
             position    = $count
             title       = if ($response.Heading) { $response.Heading } else { $Query }
             url         = if ($response.AbstractURL) { $response.AbstractURL } else { "" }
@@ -210,9 +210,9 @@ function Search-DuckDuckGoInstant {
                     $firstUrl = if ($sub.FirstURL) { $sub.FirstURL.Trim() } else { "" }
                     if ($text.Length -lt 5) { continue }
                     $count++
-                    $results += [PSCustomObject]@{
+                    $results += [ordered]@{
                         position    = $count
-                        title       = $text.Substring(0, [Math]::Min(80, $text.Length))
+                        title       = $text.Substring(0, (Get-MinInt 80 $text.Length))
                         url         = $firstUrl
                         description = $text
                         content     = ""
@@ -226,9 +226,9 @@ function Search-DuckDuckGoInstant {
             $firstUrl = if ($topic.FirstURL) { $topic.FirstURL.Trim() } else { "" }
             if ($text.Length -lt 5) { continue }
             $count++
-            $results += [PSCustomObject]@{
+            $results += [ordered]@{
                 position    = $count
-                title       = $text.Substring(0, [Math]::Min(80, $text.Length))
+                title       = $text.Substring(0, (Get-MinInt 80 $text.Length))
                 url         = $firstUrl
                 description = $text
                 content     = ""
@@ -257,7 +257,7 @@ function Extract-PageContent {
         $text = [regex]::Replace($text, '<script[^>]*>.*?</script>', '', 'Singleline,IgnoreCase')
         $text = [regex]::Replace($text, '<style[^>]*>.*?</style>', '', 'Singleline,IgnoreCase')
         $text = [regex]::Replace($text, '<[^>]+>', "`n")
-        try { $text = [System.Web.HttpUtility]::HtmlDecode($text) } catch {}
+        $text = Convert-HtmlEntities $text
         $text = ($text -split "`n" | Where-Object { $_.Trim().Length -ge 5 }) -join "`n"
         $text = [regex]::Replace($text, "`n{3,}", "`n`n")
         if ($text.Length -gt $MaxChars) { $text = $text.Substring(0, $MaxChars) + "`n... (truncated)" }

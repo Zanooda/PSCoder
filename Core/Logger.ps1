@@ -21,8 +21,8 @@ function Write-PSCoderLog {
     try {
         Add-Content -Path $Script:LogFile -Value $logEntry -Encoding UTF8 -ErrorAction Stop
     } catch {
-        # Log write failed - write to stderr as last resort
-        [Console]::Error.WriteLine("PSCoder log write failed: $($_.Exception.Message)")
+        # Log write failed - write to stderr as last resort (Console is unavailable in ConstrainedLanguage mode)
+        try { [Console]::Error.WriteLine("PSCoder log write failed: $($_.Exception.Message)") } catch {}
     }
 }
 

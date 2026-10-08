@@ -106,7 +106,7 @@ function Invoke-AutoHeal {
     }
 
     # Log with max size limit (keep last 100 entries)
-    $Script:ErrorLog += [PSCustomObject]@{
+    $Script:ErrorLog += [ordered]@{
         timestamp = $timestamp
         type = $errorType
         severity = $severity

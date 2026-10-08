@@ -199,7 +199,7 @@ function Invoke-CheckUserPreferences {
         if (-not $isNoise) {
             $currentMemory = ""
             try { $currentMemory = Get-PSCoderMemory } catch {}
-            if ($currentMemory -notmatch [regex]::Escape($preferenceText.Substring(0, [Math]::Min(30, $preferenceText.Length)))) {
+            if ($currentMemory -notmatch [regex]::Escape($preferenceText.Substring(0, (Get-MinInt 30 $preferenceText.Length)))) {
                 Add-PSCoderMemoryNote -Note "PREFERENCE: $preferenceText"
                 $decision.shouldSave = $true
                 $decision.action = "Added user preference to memory"
@@ -284,7 +284,7 @@ function Invoke-CheckSuccessPattern {
         }
 
         if ($isNotable) {
-            Add-Learning -Category "success_pattern" -Problem "File ${action}: $filePath" -Solution "Completed successfully" -Context $AssistantOutput.Substring(0, [Math]::Min(200, $AssistantOutput.Length))
+            Add-Learning -Category "success_pattern" -Problem "File ${action}: $filePath" -Solution "Completed successfully" -Context $AssistantOutput.Substring(0, (Get-MinInt 200 $AssistantOutput.Length))
             $decision.shouldSave = $true
             $decision.action = "Recorded file $action pattern"
             $decision.reason = "$filePath $action"
@@ -317,7 +317,7 @@ function Invoke-CheckCommandPattern {
 
     if ($isNewCommand -and $ToolResults -match "(command executed|output|result)") {
         if ($ToolResults -notmatch "ERROR") {
-            $cmdContext = $UserInput.Substring(0, [Math]::Min(100, $UserInput.Length))
+            $cmdContext = $UserInput.Substring(0, (Get-MinInt 100 $UserInput.Length))
             Add-Learning -Category "command_workflow" -Problem $cmdContext -Solution "Executed successfully"
             $decision.shouldSave = $true
             $decision.action = "Recorded command workflow pattern"

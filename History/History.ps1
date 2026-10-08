@@ -27,7 +27,7 @@ function Save-PSCoderSession {
     $filepath = Join-Path $dir $filename
 
     $firstUserMsg = $Messages | Where-Object { $_.role -eq "user" } | Select-Object -First 1
-    $summary = if ($firstUserMsg) { $firstUserMsg.content.Substring(0, [Math]::Min(80, $firstUserMsg.content.Length)) } else { "Untitled session" }
+    $summary = if ($firstUserMsg) { $firstUserMsg.content.Substring(0, (Get-MinInt 80 $firstUserMsg.content.Length)) } else { "Untitled session" }
 
     $session = @{
         id              = $sessionId
@@ -83,24 +83,25 @@ function Show-SessionHistory {
 }
 
 function Load-PSCoderSession {
-    param([string]$SessionId, [ref]$Messages)
+    param([string]$SessionId)
     $dir = Get-PSCoderSessionsDir
     $files = Get-ChildItem -Path $dir -Filter "*.json" | Where-Object { $_.BaseName -match "_$SessionId$" }
     if (-not $files) {
         Write-ErrorPS "Session not found: $SessionId"
-        return
+        return $null
     }
     $file = $files | Select-Object -First 1
     try {
         $json = Get-Content $file.FullName -Raw
         $data = ($json | ConvertFrom-Json) | Convert-PSObjectToHashtable
-        $Messages.Value = $data.messages
         $summary = $data.summary
         $msgCount = $data.messageCount
         $tokens = if ($data.totalTokens) { "$($data.totalTokens) tokens" } else { "" }
         $cost = if ($data.totalCost -gt 0) { "Cost: `${0:N4}" -f $data.totalCost } else { "" }
         Write-InfoPS "Session loaded: $summary ($msgCount messages, $tokens, $cost)"
+        return ,$data.messages
     } catch {
         Write-ErrorPS "Error loading session: $($_.Exception.Message)"
+        return $null
     }
 }

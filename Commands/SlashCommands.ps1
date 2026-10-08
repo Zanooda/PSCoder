@@ -3,9 +3,7 @@
 function Invoke-SlashCommand {
     param(
         [string]$Command,
-        [ref]$Model,
-        [ref]$Messages,
-        [ref]$Provider
+        [hashtable]$State
     )
 
     $parts = $Command.Trim().Split(" ", 2, [System.StringSplitOptions]::RemoveEmptyEntries)
@@ -21,14 +19,14 @@ function Invoke-SlashCommand {
             $workingDir = (Get-Location).Path
             $memory = Get-PSCoderMemory
             $prompt = Get-PSCoderSystemPrompt -WorkingDir $workingDir -MemoryContent $memory
-            $Messages.Value = @(@{ role = "system"; content = $prompt })
+            $State.Messages = @(@{ role = "system"; content = $prompt })
             Write-InfoPS "Conversation cleared."
             return "clear"
         }
         "/new" { return "reload" }
         "/model" {
             if ($args) {
-                $Model.Value = $args
+                $State.Model = $args
                 Set-PSCoderConfig -Updates @{ model = $args }
                 Write-InfoPS "Model changed to: $args"
             } else {
@@ -39,7 +37,7 @@ function Invoke-SlashCommand {
                 Get-GroqModelsList | ForEach-Object { Write-Host "  $_" -ForegroundColor Gray }
                 Write-Host "  [OrcaRouter]" -ForegroundColor Cyan
                 Get-OrcaRouterModelsList | ForEach-Object { Write-Host "  $_" -ForegroundColor Gray }
-                Write-Host "  Current: $($Model.Value)" -ForegroundColor Yellow
+                Write-Host "  Current: $($State.Model)" -ForegroundColor Yellow
             }
             return "continue"
         }
@@ -47,27 +45,27 @@ function Invoke-SlashCommand {
             if ($args) {
                 $prov = $args.ToLower()
                 if ($prov -in @("custom", "groq", "orca")) {
-                    $Provider.Value = if ($prov -eq "orca") { "orca" } else { $prov }
+                    $State.Provider = if ($prov -eq "orca") { "orca" } else { $prov }
                     Set-PSCoderConfig -Updates @{ provider = $prov }
                     Write-InfoPS "Provider changed to: $prov"
                     if ($prov -eq "groq") {
                         Write-InfoPS "Default Groq model: qwen/qwen3-32b"
-                        $Model.Value = "qwen/qwen3-32b"
+                        $State.Model = "qwen/qwen3-32b"
                         Set-PSCoderConfig -Updates @{ model = "qwen/qwen3-32b" }
                     } elseif ($prov -eq "orca") {
                         Write-InfoPS "Default OrcaRouter model: z-ai/glm-5.3-flash-free (FREE)"
-                        $Model.Value = "z-ai/glm-5.3-flash-free"
+                        $State.Model = "z-ai/glm-5.3-flash-free"
                         Set-PSCoderConfig -Updates @{ model = "z-ai/glm-5.3-flash-free"; orcaModel = "z-ai/glm-5.3-flash-free" }
                     } else {
                         Write-InfoPS "Default Custom model: deepseek-v4.1-flash (slop.storo.cloud)"
-                        $Model.Value = "deepseek-v4.1-flash"
+                        $State.Model = "deepseek-v4.1-flash"
                         Set-PSCoderConfig -Updates @{ model = "deepseek-v4.1-flash" }
                     }
                 } else {
                     Write-ErrorPS "Invalid provider. Use: custom, groq, or orca"
                 }
             } else {
-                Write-HeaderPS "Current provider: $($Provider.Value)"
+                Write-HeaderPS "Current provider: $($State.Provider)"
                 Write-Host "  Available providers:" -ForegroundColor Gray
                 Write-Host "  - custom (custom OpenAI-compatible endpoint: slop.storo.cloud)" -ForegroundColor Gray
                 Write-Host "  - groq (Llama, Mixtral, Gemma, Qwen...)" -ForegroundColor Gray
@@ -82,7 +80,8 @@ function Invoke-SlashCommand {
         }
         "/load" {
             if ($args) {
-                Load-PSCoderSession -SessionId $args -Messages $Messages
+                $loaded = Load-PSCoderSession -SessionId $args
+                if ($loaded) { $State.Messages = $loaded }
             } else {
                 Write-ErrorPS "Usage: /load <session-id>"
             }
