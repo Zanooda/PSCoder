@@ -1,151 +1,151 @@
-# PSCoder - Tests de Evaluación IA basados en Benchmarks Reales
+# PSCoder - AI Evaluation Tests based on Real Benchmarks
 # ============================================================
-# Basado en los benchmarks que usan OpenAI, Google, Anthropic y Z.AI
-# para evaluar sus modelos antes de lanzarlos.
+# Based on the benchmarks used by OpenAI, Google, Anthropic and Z.AI
+# to evaluate their models before releasing them.
 #
 # Provider: /provider orca
 # Model: /model z-ai/glm-5.3-flash-free
 # API Key: sk-orca-nzQIdv0h6Y4DHU8cgsl2jockrSESO1qQeiSukxJ6oZm
 # ============================================================
 
-## BENCHMARKS REALES REFERENCIADOS
+## REAL BENCHMARKS REFERENCED
 
-Los siguientes tests están inspirados en:
+The following tests are inspired by:
 
-1. **MMLU-Pro** (Massive Multitask Language Understanding) — 14,000 preguntas de 114 materias. Usado por OpenAI, Google, Anthropic para evaluar conocimiento general.
+1. **MMLU-Pro** (Massive Multitask Language Understanding) — 14,000 questions from 114 subjects. Used by OpenAI, Google, Anthropic to evaluate general knowledge.
 
-2. **GPQA Diamond** (Graduate-Level Physics, Chemistry, Biology Q&A) — 198 preguntas de nivel PhD. El benchmark más difícil de razonamiento. Modelos top: Gemini 3.1 Pro (62%), GPT-5 (58%), Claude Opus 5 (55%).
+2. **GPQA Diamond** (Graduate-Level Physics, Chemistry, Biology Q&A) — 198 PhD-level questions. The hardest reasoning benchmark. Top models: Gemini 3.1 Pro (62%), GPT-5 (58%), Claude Opus 5 (55%).
 
-3. **HumanEval** (OpenAI) — 164 problemas de programación en Python. Mide capacidad de generar código funcional.
+3. **HumanEval** (OpenAI) — 164 Python programming problems. Measures the ability to generate working code.
 
-4. **SWE-bench Verified** (Princeton) — 500 issues reales de GitHub. El modelo debe entender un codebase completo y proponer un fix. SWE-bench es EL benchmark de agentes de código.
+4. **SWE-bench Verified** (Princeton) — 500 real GitHub issues. The model must understand an entire codebase and propose a fix. SWE-bench is THE benchmark for coding agents.
 
-5. **GSM8K** (Grade School Math 8K) — 8,500 problemas matemáticos de primaria. Mide razonamiento matemático paso a paso.
+5. **GSM8K** (Grade School Math 8K) — 8,500 grade-school math problems. Measures step-by-step mathematical reasoning.
 
-6. **MATH** (Competition Mathematics) — 12,500 problemas de olimpiadas matemáticas. Más difícil que GSM8K.
+6. **MATH** (Competition Mathematics) — 12,500 math olympiad problems. Harder than GSM8K.
 
-7. **ARC-AGI-2** (Abstraction and Reasoning Corpus) — Test de razonamiento abstracto visual. Modelo top: ~15%.
+7. **ARC-AGI-2** (Abstraction and Reasoning Corpus) — Visual abstract reasoning test. Top model: ~15%.
 
-8. **HLE** (Humanity's Last Exam) — 3,000 preguntas creadas por expertos en 100 campos. El benchmark más difícil de 2026. Modelo top: ~20%.
+8. **HLE** (Humanity's Last Exam) — 3,000 questions created by experts across 100 fields. The hardest benchmark of 2026. Top model: ~20%.
 
-9. **AgentBench** — Evaluación de agentes autónomos en 8 entornos: sistema operativo, base de datos, casa inteligente, etc.
+9. **AgentBench** — Evaluation of autonomous agents in 8 environments: operating system, database, smart home, etc.
 
-10. **ToolBench** — Evaluación de uso de herramientas (API calls, function calling).
-
----
-
-## CATEGORÍA 1: MMLU-Pro — Conocimiento General (1-8)
-
-1. "¿Cuál de las siguientes afirmaciones sobre la entropía en un sistema aislado es correcta? A) Siempre disminuye B) Siempre aumenta o permanece constante C) Puede aumentar o disminuir D) Es siempre cero. Explica el Segundo Principio de la Termodinámica y por qué la entropía del universo siempre aumenta."
-
-2. "En economía, ¿cuál es la diferencia entre inflación por demanda e inflación por costos? Da un ejemplo real de cada una y explica cómo los bancos centrales responden diferente a cada tipo."
-
-3. "Explica el teorema de Bayes con un ejemplo médico: si una prueba tiene 99% de sensibilidad y 95% de especificidad, y la enfermedad afecta al 1% de la población, ¿cuál es la probabilidad de tener la enfermedad si la prueba es positiva? Muestra el cálculo paso a paso."
-
-4. "Compara las filosofías políticas de Hobbes, Locke y Rousseau sobre el contrato social. ¿En qué difieren sobre la naturaleza humana y el papel del Estado? ¿Cuál influenció más la Revolución Francesa?"
-
-5. "En biología molecular, explica el proceso de traducción del ARNm a proteínas: roles de ribosomas, ARNt, aminoácidos, y los codones de inicio/parada. ¿Qué pasa si hay una mutación de cambio de marco?"
-
-6. "Describe el ciclo de Krebs (ciclo del ácido cítrico): substratos, productos, ATP generado, NADH, FADH2. ¿Por qué es importante en la respiración celular aerobia? ¿Qué ocurre en condiciones anaeróbicas?"
-
-7. "Analiza la diferencia entre corrientes filosóficas: empirismo (Locke, Hume) vs racionalismo (Descartes, Leibniz). ¿Cómo abordan cada uno el problema del conocimiento? Da un argumento a favor de cada postura."
-
-8. "En química orgánica, predice el producto de una reacción SN2 entre 2-bromobutano y NaCN. Explica por qué la reacción invierte la configuración (inversión de Walden) y por qué el SN2 no ocurre con sustratos terciarios."
-
-## CATEGORÍA 2: GPQA Diamond — Razonamiento Avanzado (9-14)
-
-9. "Un satélite orbita la Tierra a 400 km de altitud. Calcula: a) su velocidad orbital, b) su período orbital, c) cuántas órbitas completa en 24 horas. Masa terrestre = 5.972×10²⁴ kg, radio terrestre = 6371 km, G = 6.674×10⁻¹¹ N·m²/kg²."
-
-10. "En mecánica cuántica, explica el experimento de la doble rendija: ¿por qué un electrón individual puede crear un patrón de interferencia? ¿Qué demuestra esto sobre la naturaleza del electrón? ¿Qué ocurre si se observa por qué rendija pasa?"
-
-11. "Un circuito tiene una resistencia de 50Ω, un condensador de 100µF y una bobina de 0.1H en serie, conectados a 220V/50Hz. Calcula: impedancia total, corriente, ángulo de fase, y potencia disipada. ¿Es el circuito inductivo o capacitivo?"
-
-12. "Demuestra matemáticamente que la transformada de Fourier de una gaussiana es otra gaussiana. Explica por qué esto es fundamental en mecánica cuántica (principio de incertidumbre de Heisenberg)."
-
-13. "En termodinámica estadística, deriva la distribución de Boltzmann a partir del principio de máxima entropía. ¿Por qué la probabilidad de un estado de energía E es proporcional a e^(-E/kT)? ¿Qué significa físicamente?"
-
-14. "Analiza la paradoja de la información en agujeros negros de Hawking: ¿cómo puede conservarse la información si la radiación Hawking es térmica? Explica la propuesta de holografía y complementaridad de ADM."
-
-## CATEGORÍA 3: HumanEval — Programación Funcional (15-22)
-
-15. "Escribe una función en Python que encuentre el máximo subarray contiguo (algoritmo de Kadane). La función debe retornar [suma_máxima, índice_inicio, índice_fin]. Incluye casos de prueba con arrays negativos."
-
-16. "Implementa una caché LRU (Least Recently Used) en Python con operaciones get y put en O(1). Usa OrderedDict. Incluye tests que demuestren que elimina el elemento correcto al exceder capacidad."
-
-17. "Escribe una función que detecte si un grafo dirigido tiene ciclos usando DFS. La función debe retornar True/False y la lista de nodos del ciclo si existe. Implementa el grafo como diccionario de adyacencia."
-
-18. "Implementa el algoritmo A* para pathfinding en una cuadrícula 2D con obstáculos. La función debe retornar el camino más corto como lista de coordenadas. Usa heurística Manhattan. Incluye un test con una cuadrícula 10x10."
-
-19. "Escribe un parser de JSON desde cero en Python (sin usar el módulo json). Debe soportar: strings, números, booleanos, null, arrays, objetos, escape de caracteres y unicode. Incluye tests con JSON anidado."
-
-20. "Implementa un trie (árbol de prefijos) en Python con métodos: insert, search, starts_with, delete. Úsalo para implementar un autocompletado que devuelva las N palabras más probables dado un prefijo."
-
-21. "Escribe un algoritmo de ordenamiento topológico para un DAG (grafo acíclico dirigido). Si el grafo tiene ciclos, debe detectarlos y reportar el ciclo. Incluye tests con dependencias de compilación."
-
-22. "Implementa una clase StreamProcessor que procese datos en streaming: recibe chunks de bytes, detecta delimitadores de mensajes (0xFF 0xFE), extrae mensajes completos, y descarta datos corruptos. Debe ser resiliente a chunks parciales."
-
-## CATEGORÍA 4: SWE-bench — Ingeniería de Software Real (23-28)
-
-23. "Simula ser un agente que resuelve un issue de GitHub. El issue dice: 'La función calculate_total() en cart.py no descuenta el IVA correctamente cuando hay productos exentos.' Describe tu proceso: 1) cómo localizas el bug, 2) qué comandos ejecutas, 3) cómo verificas el fix, 4) qué test escribes."
-
-24. "Tienes un proyecto con un memory leak en una app Node.js. Describe paso a paso cómo lo diagnosticas: herramientas (heapdump, clinic.js, --inspect), comandos a ejecutar, patrones comunes de leak (closures, event listeners, timers), y cómo lo fixeas."
-
-25. "Un servicio REST en Python devuelve respuestas lentas (>5s). Describe tu diagnóstico completo: profiling con cProfile, identificación de queries N+1 en SQLAlchemy, caching con Redis, optimización de índices en PostgreSQL, y test de carga con locust."
-
-26. "Tienes que migrar una base de datos de MySQL a PostgreSQL sin downtime. Describe la estrategia: 1) schema migration, 2) data migration con replicación (Debezium), 3) dual-write, 4) cutover. ¿Qué validaciones haces en cada paso?"
-
-27. "Code review de un PR que añade autenticación JWT. El código: 1) no valida expiración del token, 2) guarda el secret en código, 3) no tiene rate limiting, 4) usa HS256 en vez de RS256. Escribe el review con severidad de cada issue y sugerencias de fix."
-
-28. "Describe cómo implementarías CI/CD para un monorepo con 5 microservicios en Python: pipeline stages, build con Docker, tests unitarios/integración, deploy con Canary vs Blue-Green, rollback automático. Justifica cada decisión."
-
-## CATEGORÍA 5: GSM8K + MATH — Razonamiento Matemático (29-34)
-
-29. "Un comerciante compra naranjas a $0.50 cada una y las vende a $0.80. Si 10% se pudren y no puede venderlas, ¿cuántas necesita vender para ganar $100? Muestra todo el razonamiento."
-
-30. "Resuelve: si log₂(x) + log₂(x-2) = 3, encuentra x. Muestra la transformación usando propiedades de logaritmos y verifica la solución."
-
-31. "En una progresión geométrica, el primer término es 3 y la razón es 2. ¿Cuál es la suma de los primeros 20 términos? Deriva la fórmula de la suma y calcula."
-
-32. "Calcula el área encerrada entre las curvas y = x² y y = √x en el intervalo [0,1]. Usa integrales definidas. Verifica que el resultado es correcto geométricamente."
-
-33. "Una caja contiene 5 bolas rojas y 3 azules. Si sacas 3 sin reemplazo, ¿cuál es la probabilidad de obtener exactamente 2 rojas y 1 azul? Usa combinatoria y verifica con simulación conceptual."
-
-34. "Demuestra por inducción matemática que 1+2+3+...+n = n(n+1)/2. Luego deriva la fórmula de la suma de cuadrados: 1²+2²+...+n² = n(n+1)(2n+1)/6."
-
-## CATEGORÍA 6: AgentBench + ToolBench — Agentes Autónomos (35-40)
-
-35. "Eres un agente autónomo. Tu tarea: 'crea un script que monitoree 3 URLs, registre su disponibilidad cada 60s, y envíe una alerta si una cae.' Describe: qué herramientas necesitas, en qué orden las usas, qué comandos ejecutas, cómo verificas que funciona."
-
-36. "Simula ser un agente con acceso a PowerShell. El usuario pide: 'encuentra todos los archivos .log en el servidor que no se han modificado en 30 días y archívalos.' Describe tu plan, comandos, verificaciones y manejo de errores."
-
-37. "Eres un agente DevOps. El deployment falló en producción. Tienes acceso a: kubectl, docker, git, curl. Describe tu plan de troubleshooting en 5 pasos: qué ejecutas primero, qué buscas en logs, cómo identificas el commit problemático, cómo haces rollback."
-
-38. "Agente de seguridad: te piden auditar los permisos de una API REST. Describe: qué endpoints verificas, qué tests de autorización ejecutas (IDOR, privilege escalation, JWT tampering), qué herramientas usas (Burp, curl, scripts), y cómo reportas los hallazgos."
-
-39. "Eres un agente que debe optimizar una query SQL lenta. Describe: cómo obtienes el plan de ejecución (EXPLAIN ANALYZE), qué buscas (seq scan, nested loop, missing index), cómo optimizas, y qué herramientas usas (pg_stat_statements, slow query log)."
-
-40. "Agente de migración de datos: debes migrar 10M registros de MongoDB a PostgreSQL. Describe: estrategia de batch (tamaño, paralelismo), transformación de schema (BSON → relational), manejo de errores (duplicados, tipo mismatch), verificación de integridad post-migración."
+10. **ToolBench** — Evaluation of tool use (API calls, function calling).
 
 ---
 
-## CRITERIOS DE EVALUACIÓN (1-10)
+## CATEGORY 1: MMLU-Pro — General Knowledge (1-8)
 
-| Score | Nivel | Descripción |
+1. "Which of the following statements about entropy in an isolated system is correct? A) It always decreases B) It always increases or stays constant C) It can increase or decrease D) It is always zero. Explain the Second Law of Thermodynamics and why the entropy of the universe always increases."
+
+2. "In economics, what is the difference between demand-pull inflation and cost-push inflation? Give a real example of each and explain how central banks respond differently to each type."
+
+3. "Explain Bayes' theorem with a medical example: if a test has 99% sensitivity and 95% specificity, and the disease affects 1% of the population, what is the probability of having the disease if the test is positive? Show the calculation step by step."
+
+4. "Compare the political philosophies of Hobbes, Locke and Rousseau on the social contract. How do they differ on human nature and the role of the State? Which one influenced the French Revolution the most?"
+
+5. "In molecular biology, explain the process of translation from mRNA to proteins: the roles of ribosomes, tRNA, amino acids, and the start/stop codons. What happens if there is a frameshift mutation?"
+
+6. "Describe the Krebs cycle (citric acid cycle): substrates, products, ATP produced, NADH, FADH2. Why is it important in aerobic cellular respiration? What happens under anaerobic conditions?"
+
+7. "Analyze the difference between philosophical currents: empiricism (Locke, Hume) vs rationalism (Descartes, Leibniz). How does each one approach the problem of knowledge? Give an argument in favor of each position."
+
+8. "In organic chemistry, predict the product of an SN2 reaction between 2-bromobutane and NaCN. Explain why the reaction inverts the configuration (Walden inversion) and why SN2 does not occur with tertiary substrates."
+
+## CATEGORY 2: GPQA Diamond — Advanced Reasoning (9-14)
+
+9. "A satellite orbits the Earth at an altitude of 400 km. Calculate: a) its orbital velocity, b) its orbital period, c) how many orbits it completes in 24 hours. Earth's mass = 5.972×10²⁴ kg, Earth's radius = 6371 km, G = 6.674×10⁻¹¹ N·m²/kg²."
+
+10. "In quantum mechanics, explain the double-slit experiment: why can a single electron create an interference pattern? What does this demonstrate about the nature of the electron? What happens if you observe which slit it passes through?"
+
+11. "A circuit has a 50Ω resistor, a 100µF capacitor and a 0.1H coil in series, connected to 220V/50Hz. Calculate: total impedance, current, phase angle, and power dissipated. Is the circuit inductive or capacitive?"
+
+12. "Mathematically prove that the Fourier transform of a Gaussian is another Gaussian. Explain why this is fundamental in quantum mechanics (Heisenberg's uncertainty principle)."
+
+13. "In statistical thermodynamics, derive the Boltzmann distribution from the principle of maximum entropy. Why is the probability of a state of energy E proportional to e^(-E/kT)? What does it mean physically?"
+
+14. "Analyze Hawking's black hole information paradox: how can information be conserved if Hawking radiation is thermal? Explain the holography and AMPS complementarity proposal."
+
+## CATEGORY 3: HumanEval — Functional Programming (15-22)
+
+15. "Write a Python function that finds the maximum contiguous subarray (Kadane's algorithm). The function must return [max_sum, start_index, end_index]. Include test cases with negative arrays."
+
+16. "Implement an LRU (Least Recently Used) cache in Python with get and put operations in O(1). Use OrderedDict. Include tests that demonstrate it evicts the correct element when exceeding capacity."
+
+17. "Write a function that detects whether a directed graph has cycles using DFS. The function must return True/False and the list of nodes in the cycle if it exists. Implement the graph as an adjacency dictionary."
+
+18. "Implement the A* algorithm for pathfinding on a 2D grid with obstacles. The function must return the shortest path as a list of coordinates. Use the Manhattan heuristic. Include a test with a 10x10 grid."
+
+19. "Write a JSON parser from scratch in Python (without using the json module). It must support: strings, numbers, booleans, null, arrays, objects, character escaping and unicode. Include tests with nested JSON."
+
+20. "Implement a trie (prefix tree) in Python with methods: insert, search, starts_with, delete. Use it to implement autocompletion that returns the N most likely words given a prefix."
+
+21. "Write a topological sorting algorithm for a DAG (directed acyclic graph). If the graph has cycles, it must detect them and report the cycle. Include tests with compilation dependencies."
+
+22. "Implement a StreamProcessor class that processes streaming data: it receives byte chunks, detects message delimiters (0xFF 0xFE), extracts complete messages, and discards corrupted data. It must be resilient to partial chunks."
+
+## CATEGORY 4: SWE-bench — Real Software Engineering (23-28)
+
+23. "Simulate being an agent that solves a GitHub issue. The issue says: 'The calculate_total() function in cart.py does not discount VAT correctly when there are exempt products.' Describe your process: 1) how you locate the bug, 2) what commands you run, 3) how you verify the fix, 4) what test you write."
+
+24. "You have a project with a memory leak in a Node.js app. Describe step by step how you diagnose it: tools (heapdump, clinic.js, --inspect), commands to run, common leak patterns (closures, event listeners, timers), and how you fix it."
+
+25. "A REST service in Python returns slow responses (>5s). Describe your complete diagnosis: profiling with cProfile, identifying N+1 queries in SQLAlchemy, caching with Redis, index optimization in PostgreSQL, and load testing with locust."
+
+26. "You have to migrate a database from MySQL to PostgreSQL with no downtime. Describe the strategy: 1) schema migration, 2) data migration with replication (Debezium), 3) dual-write, 4) cutover. What validations do you perform at each step?"
+
+27. "Code review of a PR that adds JWT authentication. The code: 1) does not validate token expiration, 2) stores the secret in code, 3) has no rate limiting, 4) uses HS256 instead of RS256. Write the review with the severity of each issue and fix suggestions."
+
+28. "Describe how you would implement CI/CD for a monorepo with 5 Python microservices: pipeline stages, build with Docker, unit/integration tests, deploy with Canary vs Blue-Green, automatic rollback. Justify each decision."
+
+## CATEGORY 5: GSM8K + MATH — Mathematical Reasoning (29-34)
+
+29. "A merchant buys oranges at $0.50 each and sells them at $0.80. If 10% rot and cannot be sold, how many does he need to sell to earn $100? Show all the reasoning."
+
+30. "Solve: if log₂(x) + log₂(x-2) = 3, find x. Show the transformation using logarithm properties and verify the solution."
+
+31. "In a geometric progression, the first term is 3 and the ratio is 2. What is the sum of the first 20 terms? Derive the sum formula and calculate."
+
+32. "Calculate the area enclosed between the curves y = x² and y = √x in the interval [0,1]. Use definite integrals. Verify that the result is geometrically correct."
+
+33. "A box contains 5 red balls and 3 blue ones. If you draw 3 without replacement, what is the probability of getting exactly 2 red and 1 blue? Use combinatorics and verify with a conceptual simulation."
+
+34. "Prove by mathematical induction that 1+2+3+...+n = n(n+1)/2. Then derive the formula for the sum of squares: 1²+2²+...+n² = n(n+1)(2n+1)/6."
+
+## CATEGORY 6: AgentBench + ToolBench — Autonomous Agents (35-40)
+
+35. "You are an autonomous agent. Your task: 'create a script that monitors 3 URLs, logs their availability every 60s, and sends an alert if one goes down.' Describe: what tools you need, in what order you use them, what commands you run, how you verify it works."
+
+36. "Simulate being an agent with access to PowerShell. The user asks: 'find all .log files on the server that have not been modified in 30 days and archive them.' Describe your plan, commands, verifications and error handling."
+
+37. "You are a DevOps agent. The deployment failed in production. You have access to: kubectl, docker, git, curl. Describe your troubleshooting plan in 5 steps: what you run first, what you look for in the logs, how you identify the problematic commit, how you roll back."
+
+38. "Security agent: you are asked to audit the permissions of a REST API. Describe: what endpoints you verify, what authorization tests you run (IDOR, privilege escalation, JWT tampering), what tools you use (Burp, curl, scripts), and how you report the findings."
+
+39. "You are an agent that must optimize a slow SQL query. Describe: how you get the execution plan (EXPLAIN ANALYZE), what you look for (seq scan, nested loop, missing index), how you optimize, and what tools you use (pg_stat_statements, slow query log)."
+
+40. "Data migration agent: you must migrate 10M records from MongoDB to PostgreSQL. Describe: batch strategy (size, parallelism), schema transformation (BSON → relational), error handling (duplicates, type mismatch), post-migration integrity verification."
+
+---
+
+## EVALUATION CRITERIA (1-10)
+
+| Score | Level | Description |
 |-------|-------|-------------|
-| 1 | Pésimo | No respondió o respuesta incoherente |
-| 2 | Muy malo | Intentó pero con errores graves en toda la respuesta |
-| 3 | Malo | Errores significativos pero muestra algo de comprensión |
-| 4 | Regular bajo | Respuesta parcialmente correcta, varios errores |
-| 5 | Regular | Correcto pero superficial, sin profundidad |
-| 6 | Bueno | Respuesta correcta con algunos detalles |
-| 7 | Muy bueno | Respuesta detallada, razonamiento sólido |
-| 8 | Excelente | Completo, preciso, con insights adicionales |
-| 9 | Excepcional | Creativo, más allá de lo esperado |
-| 10 | Perfecto | Mejor respuesta posible, código ejecutable verificado |
+| 1 | Terrible | Did not respond or the response was incoherent |
+| 2 | Very bad | Tried but with serious errors throughout the response |
+| 3 | Bad | Significant errors but shows some understanding |
+| 4 | Below average | Partially correct response, several errors |
+| 5 | Average | Correct but superficial, without depth |
+| 6 | Good | Correct response with some details |
+| 7 | Very good | Detailed response, solid reasoning |
+| 8 | Excellent | Complete, precise, with additional insights |
+| 9 | Exceptional | Creative, beyond what was expected |
+| 10 | Perfect | The best possible response, verified executable code |
 
-## COMPARATIVA DE REFERENCIA (scores publicados 2026)
+## REFERENCE COMPARISON (published scores 2026)
 
-| Modelo | MMLU-Pro | GPQA Diamond | HumanEval | SWE-bench | HLE |
+| Model | MMLU-Pro | GPQA Diamond | HumanEval | SWE-bench | HLE |
 |--------|----------|-------------|-----------|-----------|-----|
 | GPT-5.6 Luna | 92.1% | 68.3% | 95.2% | 71.5% | 18.5% |
 | Claude Fable 5 | 91.8% | 65.7% | 94.8% | 68.2% | 17.2% |
@@ -153,4 +153,4 @@ Los siguientes tests están inspirados en:
 | GLM-5.3 Flash | 85.2% | 51.4% | 88.7% | 52.3% | 10.1% |
 | DeepSeek V4 Flash | 83.6% | 48.9% | 86.4% | 49.1% | 9.3% |
 
-*Fuentes: llm-stats.com, iternal.ai, swebench.com, lmcouncil.ai (2026)*
+*Sources: llm-stats.com, iternal.ai, swebench.com, lmcouncil.ai (2026)*

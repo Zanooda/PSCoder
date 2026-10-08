@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PSCoder - Asistente de Programacion con IA para PowerShell</title>
+    <title>PSCoder - AI Programming Assistant for PowerShell</title>
     <style>
         /* ===== Reset & Base ===== */
         *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -501,13 +501,13 @@
             <span class="nav-badge">v1.0</span>
         </div>
         <ul class="nav-links" id="navLinks">
-            <li><a href="#features">Caracteristicas</a></li>
-            <li><a href="#tools">Herramientas</a></li>
+            <li><a href="#features">Features</a></li>
+            <li><a href="#tools">Tools</a></li>
             <li><a href="#skills">Skills</a></li>
-            <li><a href="#architecture">Arquitectura</a></li>
-            <li><a href="#quickstart">Inicio Rapido</a></li>
-            <li><a href="#commands">Comandos</a></li>
-            <li><a href="#systems">Sistemas IA</a></li>
+            <li><a href="#architecture">Architecture</a></li>
+            <li><a href="#quickstart">Quick Start</a></li>
+            <li><a href="#commands">Commands</a></li>
+            <li><a href="#systems">AI Systems</a></li>
         </ul>
         <button class="hamburger" id="hamburger" aria-label="Menu">&#9776;</button>
     </div>
@@ -527,18 +527,18 @@
                 <img src="https://img.shields.io/badge/GitHub-PSCoder-blue?logo=github" alt="GitHub">
             </span>
         </div>
-        <h1>PSCoder<br><span>Asistente de IA para PowerShell</span></h1>
+        <h1>PSCoder<br><span>AI Assistant for PowerShell</span></h1>
         <p class="hero-subtitle">
-            Un agente de programacion impulsado por IA que se ejecuta directamente en tu terminal de PowerShell.
-            Comprende tu codigo, edita archivos, busca en la web y resuelve problemas de forma autonoma.
+            An AI-powered coding agent that runs directly in your PowerShell terminal.
+            Understands your code, edits files, searches the web, and solves problems autonomously.
         </p>
         <div class="hero-actions">
             <a href="https://github.com/josevdr95new/PSCoder" class="btn btn-primary" target="_blank">
                 <svg width="18" height="18" viewBox="0 0 16 16" fill="currentColor"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
-                Ver en GitHub
+                View on GitHub
             </a>
             <a href="#quickstart" class="btn btn-secondary">
-                Inicio Rapido &rarr;
+                Quick Start &rarr;
             </a>
         </div>
 
@@ -553,11 +553,11 @@
             <div class="terminal-body">
                 <div><span class="prompt">PS C:\Projects&gt;</span> <span class="cmd">Start-PSCoder</span></div>
                 <div style="color:var(--text-muted);margin:4px 0">PSCoder v1.0 - AI Coding Assistant</div>
-                <div style="margin-top:8px"><span class="prompt">[C:\Projects] [gpt-4o] &gt;</span> <span class="cmd">Como arreglo este error de PowerShell?</span></div>
-                <div style="margin-top:6px"><span class="ai">[IA]</span> <span class="tool">Cargando skill: debug-error...</span></div>
-                <div><span class="ai">[IA]</span> <span class="tool">Buscando soluciones previas...</span></div>
-                <div><span class="ai">[IA]</span> El error indica que el modulo no esta instalado. Ejecuta:</div>
-                <div style="margin-left:16px"><span class="result">Install-Module -Name MiModulo -Force</span></div>
+                <div style="margin-top:8px"><span class="prompt">[C:\Projects] [gpt-4o] &gt;</span> <span class="cmd">How do I fix this PowerShell error?</span></div>
+                <div style="margin-top:6px"><span class="ai">[AI]</span> <span class="tool">Loading skill: debug-error...</span></div>
+                <div><span class="ai">[AI]</span> <span class="tool">Searching previous solutions...</span></div>
+                <div><span class="ai">[AI]</span> The error indicates the module is not installed. Run:</div>
+                <div style="margin-left:16px"><span class="result">Install-Module -Name MyModule -Force</span></div>
                 <div style="margin-top:6px"><span class="prompt">[C:\Projects] [gpt-4o] &gt;</span> <span class="cursor"></span></div>
             </div>
         </div>
@@ -567,40 +567,40 @@
 <!-- ===== Features ===== -->
 <section class="section" id="features">
     <div class="section-header fade-in">
-        <h2>Caracteristicas Principales</h2>
-        <p>Todo lo que necesitas en un asistente de codigo impulsado por IA, directamente en tu terminal</p>
+        <h2>Main Features</h2>
+        <p>Everything you need in an AI-powered coding assistant, right in your terminal</p>
         <div class="section-divider"></div>
     </div>
     <div class="features-grid">
         <div class="feature-card fade-in">
             <div class="feature-icon">&#128736;</div>
-            <h3>19 Herramientas Integradas</h3>
-            <p>Operaciones de archivos, ejecucion de comandos PowerShell, busqueda web, OCR, auto-curacion y mas. Cada herramienta esta disenada para interactuar con tu sistema de forma segura y eficiente.</p>
+            <h3>19 Built-in Tools</h3>
+            <p>File operations, PowerShell command execution, web search, OCR, self-healing, and more. Each tool is designed to interact with your system safely and efficiently.</p>
         </div>
         <div class="feature-card fade-in">
             <div class="feature-icon green">&#9889;</div>
-            <h3>8 Skills Especializados</h3>
-            <p>Flujos de trabajo predefinidos para debugging, generacion de codigo, investigacion web, refactorizacion, administracion del sistema, extraccion de datos y documentacion.</p>
+            <h3>8 Specialized Skills</h3>
+            <p>Predefined workflows for debugging, code generation, web research, refactoring, system administration, data extraction, and documentation.</p>
         </div>
         <div class="feature-card fade-in">
             <div class="feature-icon purple">&#129504;</div>
-            <h3>Memoria Persistente</h3>
-            <p>Memoria a largo plazo que persiste entre sesiones. PSCoder recuerda tus preferencias, proyectos y soluciones anteriores para ofrecerte respuestas mas contextuales.</p>
+            <h3>Persistent Memory</h3>
+            <p>Long-term memory that persists across sessions. PSCoder remembers your preferences, projects, and previous solutions to provide more contextual answers.</p>
         </div>
         <div class="feature-card fade-in">
             <div class="feature-icon orange">&#127891;</div>
-            <h3>Auto-Aprendizaje</h3>
-            <p>Guarda automaticamente errores, soluciones y patrones para referencia futura. El sistema aprende de cada interaccion y mejora continuamente sus respuestas.</p>
+            <h3>Self-Learning</h3>
+            <p>Automatically saves errors, solutions, and patterns for future reference. The system learns from every interaction and continuously improves its answers.</p>
         </div>
         <div class="feature-card fade-in">
             <div class="feature-icon cyan">&#128137;</div>
-            <h3>Auto-Recuperacion</h3>
-            <p>Diagnostica errores y sugiere soluciones con enfoques alternativos. Clasifica los errores por tipo y provee comandos de arreglo rapido y estrategias de recuperacion.</p>
+            <h3>Self-Recovery</h3>
+            <p>Diagnoses errors and suggests solutions with alternative approaches. Classifies errors by type and provides quick-fix commands and recovery strategies.</p>
         </div>
         <div class="feature-card fade-in">
             <div class="feature-icon red">&#128193;</div>
-            <h3>Historial de Sesiones</h3>
-            <p>Guarda, lista y carga conversaciones anteriores. Cada sesion captura mensajes, modelo, proveedor, tokens, costo y directorio de trabajo para continuity total.</p>
+            <h3>Session History</h3>
+            <p>Saves, lists, and loads previous conversations. Each session captures messages, model, provider, tokens, cost, and working directory for full continuity.</p>
         </div>
     </div>
 </section>
@@ -608,8 +608,8 @@
 <!-- ===== Tools ===== -->
 <section class="section" id="tools" style="background: var(--bg-secondary); max-width: 100%; padding-left: calc((100% - 1200px)/2 + 2rem); padding-right: calc((100% - 1200px)/2 + 2rem);">
     <div class="section-header fade-in">
-        <h2>19 Herramientas Integradas</h2>
-        <p>Cada herramienta es un modulo independiente con funciones especializadas</p>
+        <h2>19 Built-in Tools</h2>
+        <p>Each tool is an independent module with specialized functions</p>
         <div class="section-divider"></div>
     </div>
     <div class="tools-container">
@@ -617,133 +617,133 @@
             <div class="tool-icon-sm">&#9881;</div>
             <div>
                 <code>execute_powershell</code>
-                <p>Ejecuta comandos PowerShell en ventana oculta sin interrumpir el chat, con proteccion de timeout</p>
+                <p>Runs PowerShell commands in a hidden window without interrupting the chat, with timeout protection</p>
             </div>
         </div>
         <div class="tool-item fade-in">
             <div class="tool-icon-sm">&#128196;</div>
             <div>
                 <code>read_file</code>
-                <p>Lee el contenido completo de archivos con metadatos (lineas, tamano en bytes)</p>
+                <p>Reads the full contents of files with metadata (lines, size in bytes)</p>
             </div>
         </div>
         <div class="tool-item fade-in">
             <div class="tool-icon-sm">&#9997;</div>
             <div>
                 <code>write_file</code>
-                <p>Crea o sobrescribe archivos, creando directorios padres automaticamente si no existen</p>
+                <p>Creates or overwrites files, automatically creating parent directories if they do not exist</p>
             </div>
         </div>
         <div class="tool-item fade-in">
             <div class="tool-icon-sm">&#9999;</div>
             <div>
                 <code>edit_file</code>
-                <p>Reemplaza texto exacto en archivos existentes con busqueda y reemplazo preciso</p>
+                <p>Replaces exact text in existing files with precise search and replace</p>
             </div>
         </div>
         <div class="tool-item fade-in">
             <div class="tool-icon-sm">&#128269;</div>
             <div>
                 <code>search_files</code>
-                <p>Busca patrones regex en archivos (estilo grep), con filtro por tipo de archivo</p>
+                <p>Searches for regex patterns in files (grep-style), with filtering by file type</p>
             </div>
         </div>
         <div class="tool-item fade-in">
             <div class="tool-icon-sm">&#128194;</div>
             <div>
                 <code>glob_files</code>
-                <p>Encuentra archivos por patron con soporte de comodines recursivos (**)</p>
+                <p>Finds files by pattern with support for recursive wildcards (**)</p>
             </div>
         </div>
         <div class="tool-item fade-in">
             <div class="tool-icon-sm">&#128203;</div>
             <div>
                 <code>list_directory</code>
-                <p>Lista archivos y subdirectorios con tipo, tamano y fecha de modificacion</p>
+                <p>Lists files and subdirectories with type, size, and modification date</p>
             </div>
         </div>
         <div class="tool-item fade-in">
             <div class="tool-icon-sm">&#127760;</div>
             <div>
                 <code>web_search</code>
-                <p>Busqueda web con Brave API + DuckDuckGo como respaldo, con cache de 5 minutos</p>
+                <p>Web search with Brave API + DuckDuckGo as fallback, with a 5-minute cache</p>
             </div>
         </div>
         <div class="tool-item fade-in">
             <div class="tool-icon-sm">&#128229;</div>
             <div>
                 <code>web_fetch</code>
-                <p>Obtiene contenido de URLs con soporte Markdown for Agents para ahorro de tokens</p>
+                <p>Fetches content from URLs with Markdown for Agents support to save tokens</p>
             </div>
         </div>
         <div class="tool-item fade-in">
             <div class="tool-icon-sm">&#128247;</div>
             <div>
                 <code>ocr_image</code>
-                <p>Extrae texto de imagenes usando OCR nativo de Windows (WinRT), sin instalacion adicional</p>
+                <p>Extracts text from images using native Windows OCR (WinRT), with no extra installation</p>
             </div>
         </div>
         <div class="tool-item fade-in">
             <div class="tool-icon-sm">&#128137;</div>
             <div>
                 <code>auto_heal</code>
-                <p>Analiza errores y proporciona sugerencias estructuradas de recuperacion con arreglo rapido</p>
+                <p>Analyzes errors and provides structured recovery suggestions with quick fixes</p>
             </div>
         </div>
         <div class="tool-item fade-in">
             <div class="tool-icon-sm">&#127891;</div>
             <div>
                 <code>learn_from_error</code>
-                <p>Registra soluciones para referencia futura en la base de datos de aprendizajes</p>
+                <p>Records solutions for future reference in the learnings database</p>
             </div>
         </div>
         <div class="tool-item fade-in">
             <div class="tool-icon-sm">&#128270;</div>
             <div>
                 <code>find_solution</code>
-                <p>Busca problemas resueltos anteriormente por similitud de palabras clave</p>
+                <p>Searches previously solved problems by keyword similarity</p>
             </div>
         </div>
         <div class="tool-item fade-in">
             <div class="tool-icon-sm">&#128203;</div>
             <div>
                 <code>create_plan</code>
-                <p>Crea planes estructurados paso a paso con criterios de exito y herramientas sugeridas</p>
+                <p>Creates structured step-by-step plans with success criteria and suggested tools</p>
             </div>
         </div>
         <div class="tool-item fade-in">
             <div class="tool-icon-sm">&#9989;</div>
             <div>
                 <code>verify_step</code>
-                <p>Verifica la ejecucion de un paso individual del plan con auto-curacion si falla</p>
+                <p>Verifies the execution of an individual plan step with self-healing if it fails</p>
             </div>
         </div>
         <div class="tool-item fade-in">
             <div class="tool-icon-sm">&#127942;</div>
             <div>
                 <code>verify_task</code>
-                <p>Verifica el resultado completo de una tarea generando un informe de verificacion</p>
+                <p>Verifies the complete result of a task by generating a verification report</p>
             </div>
         </div>
         <div class="tool-item fade-in">
             <div class="tool-icon-sm">&#128190;</div>
             <div>
                 <code>save_learning</code>
-                <p>Guarda aprendizajes automaticamente en la base de datos de patrones</p>
+                <p>Saves learnings automatically to the patterns database</p>
             </div>
         </div>
         <div class="tool-item fade-in">
             <div class="tool-icon-sm">&#128218;</div>
             <div>
                 <code>list_skills</code>
-                <p>Lista todos los flujos de trabajo especializados disponibles con sus descripciones</p>
+                <p>Lists all available specialized workflows with their descriptions</p>
             </div>
         </div>
         <div class="tool-item fade-in">
             <div class="tool-icon-sm">&#128214;</div>
             <div>
                 <code>read_skill</code>
-                <p>Carga las instrucciones completas de un skill especifico por nombre</p>
+                <p>Loads the complete instructions of a specific skill by name</p>
             </div>
         </div>
     </div>
@@ -752,50 +752,50 @@
 <!-- ===== Skills ===== -->
 <section class="section" id="skills">
     <div class="section-header fade-in">
-        <h2>8 Skills Especializados</h2>
-        <p>Flujos de trabajo predefinidos que el agente carga automaticamente segun la tarea</p>
+        <h2>8 Specialized Skills</h2>
+        <p>Predefined workflows that the agent loads automatically based on the task</p>
         <div class="section-divider"></div>
     </div>
     <div class="skills-grid">
         <div class="skill-card fade-in">
-            <span class="skill-tag research">Investigacion</span>
+            <span class="skill-tag research">Research</span>
             <h3>Web Research</h3>
-            <p>Busca, obtiene y sintetiza informacion actualizada de la web. Incluye verificacion de compatibilidad de versiones y busqueda con terminos alternativos.</p>
+            <p>Searches, fetches, and synthesizes up-to-date information from the web. Includes version compatibility checks and searching with alternative terms.</p>
         </div>
         <div class="skill-card fade-in">
-            <span class="skill-tag analysis">Analisis</span>
+            <span class="skill-tag analysis">Analysis</span>
             <h3>File Analysis</h3>
-            <p>Analiza estructura de proyectos, codebases y configuraciones. Construye un mapa mental del proyecto leyendo puntos de entrada primero.</p>
+            <p>Analyzes project structure, codebases, and configurations. Builds a mental map of the project by reading entry points first.</p>
         </div>
         <div class="skill-card fade-in">
             <span class="skill-tag debug">Debug</span>
             <h3>Debug Error</h3>
-            <p>Diagnostica y resuelve errores con solucion sistematica en 9 pasos: verificar version, auto-heal, buscar soluciones, leer codigo, aplicar fix y verificar.</p>
+            <p>Diagnoses and resolves errors with a systematic 9-step solution: check version, auto-heal, search for solutions, read code, apply fix, and verify.</p>
         </div>
         <div class="skill-card fade-in">
-            <span class="skill-tag code">Generacion</span>
+            <span class="skill-tag code">Generation</span>
             <h3>Code Generation</h3>
-            <p>Crea scripts, funciones y modulos nuevos desde cero. Respetando el estilo del proyecto, anadiendo manejo de errores y sin inventar APIs inexistentes.</p>
+            <p>Creates new scripts, functions, and modules from scratch. Respecting the project's style, adding error handling, and without inventing nonexistent APIs.</p>
         </div>
         <div class="skill-card fade-in">
             <span class="skill-tag refactor">Refactor</span>
             <h3>Refactor</h3>
-            <p>Mejora calidad, legibilidad y rendimiento del codigo sin cambiar funcionalidad. Cambios pequenos y testeables, sin over-engineering.</p>
+            <p>Improves code quality, readability, and performance without changing functionality. Small, testable changes, without over-engineering.</p>
         </div>
         <div class="skill-card fade-in">
             <span class="skill-tag admin">Admin</span>
             <h3>PowerShell Admin</h3>
-            <p>Tareas de administracion de sistemas Windows: servicios, procesos, registro, usuarios, redes y permisos. Recomienda -WhatIf para operaciones destructivas.</p>
+            <p>Windows system administration tasks: services, processes, registry, users, networks, and permissions. Recommends -WhatIf for destructive operations.</p>
         </div>
         <div class="skill-card fade-in">
-            <span class="skill-tag data">Datos</span>
+            <span class="skill-tag data">Data</span>
             <h3>Data Extraction</h3>
-            <p>Parsea y transforma datos de archivos, APIs y paginas web. Usa regex, ConvertFrom-Json/Xml, y manejo de codificacion para extraccion limpia.</p>
+            <p>Parses and transforms data from files, APIs, and web pages. Uses regex, ConvertFrom-Json/Xml, and encoding handling for clean extraction.</p>
         </div>
         <div class="skill-card fade-in">
             <span class="skill-tag docs">Docs</span>
             <h3>Documentation</h3>
-            <p>Crea y mejora documentacion de proyectos. Incluye ejemplos de codigo, documentacion de parametros y valores de retorno.</p>
+            <p>Creates and improves project documentation. Includes code examples, parameter documentation, and return values.</p>
         </div>
     </div>
 </section>
@@ -803,81 +803,81 @@
 <!-- ===== Architecture ===== -->
 <section class="section" id="architecture" style="background: var(--bg-secondary); max-width: 100%; padding-left: calc((100% - 1200px)/2 + 2rem); padding-right: calc((100% - 1200px)/2 + 2rem);">
     <div class="section-header fade-in">
-        <h2>Arquitectura del Proyecto</h2>
-        <p>Estructura modular y organizada por capas de responsabilidad</p>
+        <h2>Project Architecture</h2>
+        <p>Modular structure organized by layers of responsibility</p>
         <div class="section-divider"></div>
     </div>
     <div class="arch-container">
         <div class="arch-block fade-in">
             <h3>
                 <span class="arch-icon" style="background:rgba(88,166,255,0.15);color:var(--accent-blue);">API</span>
-                Capa de API
+                API Layer
             </h3>
             <div class="arch-tree">
                 <span class="dir">API/</span><br>
-                &nbsp;&nbsp;&nbsp;&nbsp;<span class="file">BaseClient.ps1</span> <span class="comment"># Cliente HTTP con reintentos</span><br>
-                &nbsp;&nbsp;&nbsp;&nbsp;<span class="file">Custom.ps1</span> <span class="comment"># Integracion endpoint compatible con OpenAI</span><br>
-                &nbsp;&nbsp;&nbsp;&nbsp;<span class="file">Groq.ps1</span> <span class="comment"># Integracion Groq</span>
+                &nbsp;&nbsp;&nbsp;&nbsp;<span class="file">BaseClient.ps1</span> <span class="comment"># HTTP client with retries</span><br>
+                &nbsp;&nbsp;&nbsp;&nbsp;<span class="file">Custom.ps1</span> <span class="comment"># OpenAI-compatible endpoint integration</span><br>
+                &nbsp;&nbsp;&nbsp;&nbsp;<span class="file">Groq.ps1</span> <span class="comment"># Groq integration</span>
             </div>
         </div>
         <div class="arch-block fade-in">
             <h3>
                 <span class="arch-icon" style="background:rgba(63,185,80,0.15);color:var(--accent-green);">Core</span>
-                Nucleo del Sistema
+                System Core
             </h3>
             <div class="arch-tree">
                 <span class="dir">Core/</span><br>
-                &nbsp;&nbsp;&nbsp;&nbsp;<span class="file">Main-Loop.ps1</span> <span class="comment"># Bucle principal REPL</span><br>
-                &nbsp;&nbsp;&nbsp;&nbsp;<span class="file">SystemPrompt.ps1</span> <span class="comment"># Prompt del sistema</span><br>
-                &nbsp;&nbsp;&nbsp;&nbsp;<span class="file">ContextBuilder.ps1</span> <span class="comment"># Contexto Git+Proyecto</span><br>
-                &nbsp;&nbsp;&nbsp;&nbsp;<span class="file">ReasoningEngine.ps1</span> <span class="comment"># Planificacion</span><br>
-                &nbsp;&nbsp;&nbsp;&nbsp;<span class="file">AutoHealing.ps1</span> <span class="comment"># Auto-recuperacion</span><br>
-                &nbsp;&nbsp;&nbsp;&nbsp;<span class="file">AutoImprove.ps1</span> <span class="comment"># Auto-aprendizaje</span><br>
-                &nbsp;&nbsp;&nbsp;&nbsp;<span class="file">MemoryDecision.ps1</span> <span class="comment"># Decisiones de memoria</span><br>
-                &nbsp;&nbsp;&nbsp;&nbsp;<span class="file">Permissions.ps1</span> <span class="comment"># Sistema de permisos</span><br>
-                &nbsp;&nbsp;&nbsp;&nbsp;<span class="file">Hooks.ps1</span> <span class="comment"># Hooks pre/post</span><br>
-                &nbsp;&nbsp;&nbsp;&nbsp;<span class="file">AgentNarration.ps1</span> <span class="comment"># Narracion visual+voz</span><br>
-                &nbsp;&nbsp;&nbsp;&nbsp;<span class="file">Logger.ps1</span> <span class="comment"># Sistema de logging</span><br>
-                &nbsp;&nbsp;&nbsp;&nbsp;<span class="file">Init.ps1</span> <span class="comment"># Inicializacion</span><br>
-                &nbsp;&nbsp;&nbsp;&nbsp;<span class="file">InterruptHandler.ps1</span> <span class="comment"># Manejo de interrupciones</span>
+                &nbsp;&nbsp;&nbsp;&nbsp;<span class="file">Main-Loop.ps1</span> <span class="comment"># Main REPL loop</span><br>
+                &nbsp;&nbsp;&nbsp;&nbsp;<span class="file">SystemPrompt.ps1</span> <span class="comment"># System prompt</span><br>
+                &nbsp;&nbsp;&nbsp;&nbsp;<span class="file">ContextBuilder.ps1</span> <span class="comment"># Git + Project context</span><br>
+                &nbsp;&nbsp;&nbsp;&nbsp;<span class="file">ReasoningEngine.ps1</span> <span class="comment"># Planning</span><br>
+                &nbsp;&nbsp;&nbsp;&nbsp;<span class="file">AutoHealing.ps1</span> <span class="comment"># Self-recovery</span><br>
+                &nbsp;&nbsp;&nbsp;&nbsp;<span class="file">AutoImprove.ps1</span> <span class="comment"># Self-learning</span><br>
+                &nbsp;&nbsp;&nbsp;&nbsp;<span class="file">MemoryDecision.ps1</span> <span class="comment"># Memory decisions</span><br>
+                &nbsp;&nbsp;&nbsp;&nbsp;<span class="file">Permissions.ps1</span> <span class="comment"># Permissions system</span><br>
+                &nbsp;&nbsp;&nbsp;&nbsp;<span class="file">Hooks.ps1</span> <span class="comment"># Pre/post hooks</span><br>
+                &nbsp;&nbsp;&nbsp;&nbsp;<span class="file">AgentNarration.ps1</span> <span class="comment"># Visual + voice narration</span><br>
+                &nbsp;&nbsp;&nbsp;&nbsp;<span class="file">Logger.ps1</span> <span class="comment"># Logging system</span><br>
+                &nbsp;&nbsp;&nbsp;&nbsp;<span class="file">Init.ps1</span> <span class="comment"># Initialization</span><br>
+                &nbsp;&nbsp;&nbsp;&nbsp;<span class="file">InterruptHandler.ps1</span> <span class="comment"># Interrupt handling</span>
             </div>
         </div>
         <div class="arch-block fade-in">
             <h3>
                 <span class="arch-icon" style="background:rgba(188,140,255,0.15);color:var(--accent-purple);">Tools</span>
-                Herramientas
+                Tools
             </h3>
             <div class="arch-tree">
                 <span class="dir">Tools/</span><br>
-                &nbsp;&nbsp;&nbsp;&nbsp;<span class="file">Invoke-Tool.ps1</span> <span class="comment"># Despachador central</span><br>
-                &nbsp;&nbsp;&nbsp;&nbsp;<span class="file">ToolRegistry.ps1</span> <span class="comment"># Esquemas para LLM</span><br>
-                &nbsp;&nbsp;&nbsp;&nbsp;<span class="file">ExecutePowerShell.ps1</span> <span class="comment"># Ejecucion PS</span><br>
+                &nbsp;&nbsp;&nbsp;&nbsp;<span class="file">Invoke-Tool.ps1</span> <span class="comment"># Central dispatcher</span><br>
+                &nbsp;&nbsp;&nbsp;&nbsp;<span class="file">ToolRegistry.ps1</span> <span class="comment"># Schemas for the LLM</span><br>
+                &nbsp;&nbsp;&nbsp;&nbsp;<span class="file">ExecutePowerShell.ps1</span> <span class="comment"># PS execution</span><br>
                 &nbsp;&nbsp;&nbsp;&nbsp;<span class="file">ReadFile.ps1</span> / <span class="file">WriteFile.ps1</span> / <span class="file">EditFile.ps1</span><br>
                 &nbsp;&nbsp;&nbsp;&nbsp;<span class="file">SearchFiles.ps1</span> / <span class="file">GlobFiles.ps1</span> / <span class="file">ListDirectory.ps1</span><br>
                 &nbsp;&nbsp;&nbsp;&nbsp;<span class="file">WebSearch.ps1</span> / <span class="file">WebFetch.ps1</span><br>
-                &nbsp;&nbsp;&nbsp;&nbsp;<span class="file">OcrImage.ps1</span> <span class="comment"># OCR nativo Windows</span><br>
-                &nbsp;&nbsp;&nbsp;&nbsp;<span class="file">SkillManager.ps1</span> <span class="comment"># Gestor de skills</span><br>
-                &nbsp;&nbsp;&nbsp;&nbsp;<span class="file">Cache.ps1</span> <span class="comment"># Sistema de cache</span>
+                &nbsp;&nbsp;&nbsp;&nbsp;<span class="file">OcrImage.ps1</span> <span class="comment"># Native Windows OCR</span><br>
+                &nbsp;&nbsp;&nbsp;&nbsp;<span class="file">SkillManager.ps1</span> <span class="comment"># Skills manager</span><br>
+                &nbsp;&nbsp;&nbsp;&nbsp;<span class="file">Cache.ps1</span> <span class="comment"># Cache system</span>
             </div>
         </div>
         <div class="arch-block fade-in">
             <h3>
-                <span class="arch-icon" style="background:rgba(240,136,62,0.15);color:var(--accent-orange);">Otros</span>
-                Modulos Complementarios
+                <span class="arch-icon" style="background:rgba(240,136,62,0.15);color:var(--accent-orange);">Other</span>
+                Complementary Modules
             </h3>
             <div class="arch-tree">
                 <span class="dir">Commands/</span><br>
-                &nbsp;&nbsp;&nbsp;&nbsp;<span class="file">SlashCommands.ps1</span> <span class="comment"># Comandos /help, /model...</span><br><br>
+                &nbsp;&nbsp;&nbsp;&nbsp;<span class="file">SlashCommands.ps1</span> <span class="comment"># /help, /model commands...</span><br><br>
                 <span class="dir">Config/</span><br>
-                &nbsp;&nbsp;&nbsp;&nbsp;<span class="file">Config.ps1</span> <span class="comment"># Configuracion JSON</span><br><br>
+                &nbsp;&nbsp;&nbsp;&nbsp;<span class="file">Config.ps1</span> <span class="comment"># JSON configuration</span><br><br>
                 <span class="dir">History/</span><br>
-                &nbsp;&nbsp;&nbsp;&nbsp;<span class="file">History.ps1</span> <span class="comment"># Sesiones guardadas</span><br><br>
+                &nbsp;&nbsp;&nbsp;&nbsp;<span class="file">History.ps1</span> <span class="comment"># Saved sessions</span><br><br>
                 <span class="dir">Memory/</span><br>
-                &nbsp;&nbsp;&nbsp;&nbsp;<span class="file">Memory.ps1</span> <span class="comment"># Memoria persistente</span><br><br>
+                &nbsp;&nbsp;&nbsp;&nbsp;<span class="file">Memory.ps1</span> <span class="comment"># Persistent memory</span><br><br>
                 <span class="dir">Skills/</span><br>
-                &nbsp;&nbsp;&nbsp;&nbsp;<span class="file">8 archivos .md</span> <span class="comment"># Instrucciones por skill</span><br><br>
+                &nbsp;&nbsp;&nbsp;&nbsp;<span class="file">8 .md files</span> <span class="comment"># Per-skill instructions</span><br><br>
                 <span class="dir">UI/</span><br>
-                &nbsp;&nbsp;&nbsp;&nbsp;<span class="file">Formatter.ps1</span> <span class="comment"># Formato CLI</span>
+                &nbsp;&nbsp;&nbsp;&nbsp;<span class="file">Formatter.ps1</span> <span class="comment"># CLI formatting</span>
             </div>
         </div>
     </div>
@@ -886,16 +886,16 @@
 <!-- ===== Quick Start ===== -->
 <section class="section" id="quickstart">
     <div class="section-header fade-in">
-        <h2>Inicio Rapido</h2>
-        <p>Comienza a usar PSCoder en 3 simples pasos</p>
+        <h2>Quick Start</h2>
+        <p>Start using PSCoder in 3 simple steps</p>
         <div class="section-divider"></div>
     </div>
     <div class="quickstart-steps">
         <div class="step fade-in">
             <div class="step-number">1</div>
             <div class="step-content">
-                <h3>Clonar el repositorio</h3>
-                <p>Copia el repositorio de GitHub a tu maquina local y navega al directorio del proyecto.</p>
+                <h3>Clone the repository</h3>
+                <p>Copy the GitHub repository to your local machine and navigate to the project directory.</p>
                 <div class="code-block">
                     <div class="code-header"><span>PowerShell</span></div>
                     <div class="code-body">
@@ -908,19 +908,19 @@
         <div class="step fade-in">
             <div class="step-number">2</div>
             <div class="step-content">
-                <h3>Configurar tu clave API</h3>
-                <p>Necesitas una clave API para el endpoint personalizado compatible con OpenAI (slop.storo.cloud) o Groq. Configurala como variable de entorno o interactivamente.</p>
+                <h3>Configure your API key</h3>
+                <p>You need an API key for the custom OpenAI-compatible endpoint (slop.storo.cloud) or Groq. Configure it as an environment variable or interactively.</p>
                 <div class="code-block">
-                    <div class="code-header"><span>PowerShell - Opcion 1: Variable de entorno</span></div>
+                    <div class="code-header"><span>PowerShell - Option 1: Environment variable</span></div>
                     <div class="code-body">
-                        <span class="var">$env</span>:SLOP_API_KEY = <span class="str">"tu-clave-aqui"</span>
+                        <span class="var">$env</span>:SLOP_API_KEY = <span class="str">"your-key-here"</span>
                     </div>
                 </div>
                 <div class="code-block">
-                    <div class="code-header"><span>PowerShell - Opcion 2: Configuracion interactiva</span></div>
+                    <div class="code-header"><span>PowerShell - Option 2: Interactive configuration</span></div>
                     <div class="code-body">
                         <span class="cmd">Start-PSCoder</span><br>
-                        <span class="comment"># Luego usa: /config apiKey tu-clave-aqui</span>
+                        <span class="comment"># Then use: /config apiKey your-key-here</span>
                     </div>
                 </div>
             </div>
@@ -928,17 +928,17 @@
         <div class="step fade-in">
             <div class="step-number">3</div>
             <div class="step-content">
-                <h3>Iniciar PSCoder</h3>
-                <p>Ejecuta el asistente y comienza a interactuar con la IA. Tambien puedes usar el archivo .bat para Windows.</p>
+                <h3>Start PSCoder</h3>
+                <p>Run the assistant and start interacting with the AI. You can also use the .bat file for Windows.</p>
                 <div class="code-block">
                     <div class="code-header"><span>PowerShell</span></div>
                     <div class="code-body">
-                        <span class="comment"># Importar y ejecutar</span><br>
+                        <span class="comment"># Import and run</span><br>
                         <span class="cmd">Import-Module</span> .\PSCoder.psd1<br>
                         <span class="cmd">Start-PSCoder</span><br><br>
-                        <span class="comment"># O directamente:</span><br>
+                        <span class="comment"># Or directly:</span><br>
                         .\Start-PSCoder.ps1<br><br>
-                        <span class="comment"># O con modelo especifico:</span><br>
+                        <span class="comment"># Or with a specific model:</span><br>
                         .\Start-PSCoder.ps1 -Model <span class="str">"deepseek-v4.1-flash"</span> -Provider <span class="str">"custom"</span>
                     </div>
                 </div>
@@ -950,36 +950,36 @@
 <!-- ===== Commands ===== -->
 <section class="section" id="commands" style="background: var(--bg-secondary); max-width: 100%; padding-left: calc((100% - 1200px)/2 + 2rem); padding-right: calc((100% - 1200px)/2 + 2rem);">
     <div class="section-header fade-in">
-        <h2>Comandos Disponibles</h2>
-        <p>Controla PSCoder con comandos slash directamente en el chat</p>
+        <h2>Available Commands</h2>
+        <p>Control PSCoder with slash commands directly in the chat</p>
         <div class="section-divider"></div>
     </div>
     <div class="table-wrapper" style="max-width:900px;margin:0 auto;">
         <table>
             <thead>
                 <tr>
-                    <th>Comando</th>
-                    <th>Descripcion</th>
+                    <th>Command</th>
+                    <th>Description</th>
                 </tr>
             </thead>
             <tbody>
-                <tr><td><code>/help</code></td><td>Muestra todos los comandos disponibles</td></tr>
-                <tr><td><code>/clear</code></td><td>Limpia la conversacion actual</td></tr>
-                <tr><td><code>/new</code></td><td>Nueva conversacion (recarga la memoria)</td></tr>
-                <tr><td><code>/model</code></td><td>Cambia el modelo de IA (gpt-4o, gemini, qwen, etc.)</td></tr>
-                <tr><td><code>/provider</code></td><td>Cambia el proveedor (custom / groq / orca)</td></tr>
-                <tr><td><code>/history</code></td><td>Lista las sesiones guardadas</td></tr>
-                <tr><td><code>/load &lt;id&gt;</code></td><td>Carga una sesion anterior por su ID</td></tr>
-                <tr><td><code>/memory</code></td><td>Muestra la memoria a largo plazo</td></tr>
-                <tr><td><code>/memory add X</code></td><td>Agrega informacion a la memoria</td></tr>
-                <tr><td><code>/memory edit</code></td><td>Abre el archivo de memoria en el editor</td></tr>
-                <tr><td><code>/memory clear</code></td><td>Limpia toda la memoria persistente</td></tr>
-                <tr><td><code>/tools</code></td><td>Lista las herramientas disponibles</td></tr>
-                <tr><td><code>/config</code></td><td>Muestra o cambia la configuracion</td></tr>
-                <tr><td><code>/narrate on</code></td><td>Activa la narracion del agente (visual + voz)</td></tr>
-                <tr><td><code>/narrate off</code></td><td>Desactiva la narracion</td></tr>
-                <tr><td><code>/speak &lt;texto&gt;</code></td><td>Lee texto personalizado en voz alta</td></tr>
-                <tr><td><code>/exit</code></td><td>Guarda la sesion y sale de PSCoder</td></tr>
+                <tr><td><code>/help</code></td><td>Shows all available commands</td></tr>
+                <tr><td><code>/clear</code></td><td>Clears the current conversation</td></tr>
+                <tr><td><code>/new</code></td><td>New conversation (reloads memory)</td></tr>
+                <tr><td><code>/model</code></td><td>Changes the AI model (gpt-4o, gemini, qwen, etc.)</td></tr>
+                <tr><td><code>/provider</code></td><td>Changes the provider (custom / groq / orca)</td></tr>
+                <tr><td><code>/history</code></td><td>Lists saved sessions</td></tr>
+                <tr><td><code>/load &lt;id&gt;</code></td><td>Loads a previous session by its ID</td></tr>
+                <tr><td><code>/memory</code></td><td>Shows long-term memory</td></tr>
+                <tr><td><code>/memory add X</code></td><td>Adds information to memory</td></tr>
+                <tr><td><code>/memory edit</code></td><td>Opens the memory file in the editor</td></tr>
+                <tr><td><code>/memory clear</code></td><td>Clears all persistent memory</td></tr>
+                <tr><td><code>/tools</code></td><td>Lists available tools</td></tr>
+                <tr><td><code>/config</code></td><td>Shows or changes the configuration</td></tr>
+                <tr><td><code>/narrate on</code></td><td>Enables agent narration (visual + voice)</td></tr>
+                <tr><td><code>/narrate off</code></td><td>Disables narration</td></tr>
+                <tr><td><code>/speak &lt;text&gt;</code></td><td>Reads custom text aloud</td></tr>
+                <tr><td><code>/exit</code></td><td>Saves the session and exits PSCoder</td></tr>
             </tbody>
         </table>
     </div>
@@ -988,8 +988,8 @@
 <!-- ===== Smart Systems ===== -->
 <section class="section" id="systems">
     <div class="section-header fade-in">
-        <h2>Sistemas Inteligentes</h2>
-        <p>Mecanismos avanzados que hacen a PSCoder autonomo y auto-mejorable</p>
+        <h2>Intelligent Systems</h2>
+        <p>Advanced mechanisms that make PSCoder autonomous and self-improving</p>
         <div class="section-divider"></div>
     </div>
     <div class="systems-grid">
@@ -997,42 +997,42 @@
             <div class="system-icon">&#129504;</div>
             <div>
                 <h3>Memory Decision</h3>
-                <p>Analiza cada turno de conversacion y decide automaticamente que informacion vale la pena persistir: errores resueltos, preferencias del usuario, contexto de proyecto, patrones de exito y flujos de comandos.</p>
+                <p>Analyzes each conversation turn and automatically decides what information is worth persisting: resolved errors, user preferences, project context, success patterns, and command flows.</p>
             </div>
         </div>
         <div class="system-card fade-in">
             <div class="system-icon">&#9881;</div>
             <div>
                 <h3>Reasoning Engine</h3>
-                <p>Motor de planificacion que crea planes paso a paso con herramientas sugeridas y criterios de exito. Verifica cada paso individualmente y la tarea completa, con auto-curacion si un paso falla.</p>
+                <p>Planning engine that creates step-by-step plans with suggested tools and success criteria. Verifies each step individually and the complete task, with self-healing if a step fails.</p>
             </div>
         </div>
         <div class="system-card fade-in">
             <div class="system-icon">&#128274;</div>
             <div>
-                <h3>Sistema de Permisos</h3>
-                <p>4 modos de permisos: Default (lecturas auto-aprobadas), AcceptEdits (auto-aprobar todo), BypassPermissions (sin aprobacion) y Plan (solo lecturas). Detecta comandos peligrosos como Remove-Item o Format-Volume.</p>
+                <h3>Permissions System</h3>
+                <p>4 permission modes: Default (auto-approved reads), AcceptEdits (auto-approve everything), BypassPermissions (no approval), and Plan (reads only). Detects dangerous commands like Remove-Item or Format-Volume.</p>
             </div>
         </div>
         <div class="system-card fade-in">
             <div class="system-icon">&#128276;</div>
             <div>
                 <h3>Hooks</h3>
-                <p>Sistema de hooks PreToolUse (puede bloquear ejecucion), PostToolUse (corre despues de ejecutar) y Stop (al final de cada turno). Scripts personalizables en ~/.pscoder/hooks/.</p>
+                <p>Hook system with PreToolUse (can block execution), PostToolUse (runs after execution), and Stop (at the end of each turn). Customizable scripts in ~/.pscoder/hooks/.</p>
             </div>
         </div>
         <div class="system-card fade-in">
             <div class="system-icon">&#128202;</div>
             <div>
                 <h3>Context Builder</h3>
-                <p>Incluye automaticamente estado de Git (commits recientes, cambios sin commitear) y busca archivos PSCODER.md con instrucciones especificas del proyecto. Cache en memoria de 2 minutos.</p>
+                <p>Automatically includes Git status (recent commits, uncommitted changes) and looks for PSCODER.md files with project-specific instructions. 2-minute in-memory cache.</p>
             </div>
         </div>
         <div class="system-card fade-in">
             <div class="system-icon">&#127908;</div>
             <div>
                 <h3>Agent Narration</h3>
-                <p>Retroalimentacion visual y por voz de las acciones del agente. Usa Windows SAPI para texto-a-voz, con colores diferenciados para pensamientos, acciones, resultados y errores.</p>
+                <p>Visual and voice feedback for the agent's actions. Uses Windows SAPI for text-to-speech, with distinct colors for thoughts, actions, results, and errors.</p>
             </div>
         </div>
     </div>
@@ -1041,23 +1041,23 @@
 <!-- ===== Data Storage ===== -->
 <section class="section" id="data" style="background: var(--bg-secondary); max-width: 100%; padding-left: calc((100% - 1200px)/2 + 2rem); padding-right: calc((100% - 1200px)/2 + 2rem);">
     <div class="section-header fade-in">
-        <h2>Almacenamiento de Datos</h2>
-        <p>Todos los datos del usuario se guardan en ~/.pscoder/ &mdash; nada sensible en el repositorio</p>
+        <h2>Data Storage</h2>
+        <p>All user data is stored in ~/.pscoder/ &mdash; nothing sensitive in the repository</p>
         <div class="section-divider"></div>
     </div>
     <div class="data-tree-container fade-in">
         <div class="data-tree">
             <span class="dir-name">~/.pscoder/</span><br>
-            &nbsp;&nbsp;&nbsp;&nbsp;<span class="file-name">config.json</span> <span class="desc">&mdash; Configuracion (API keys, modelo, etc.)</span><br>
-            &nbsp;&nbsp;&nbsp;&nbsp;<span class="file-name">MEMORY.md</span> <span class="desc">&mdash; Memoria a largo plazo</span><br>
-            &nbsp;&nbsp;&nbsp;&nbsp;<span class="dir-name">Sessions/</span> <span class="desc">&mdash; Sesiones de conversacion guardadas</span><br>
+            &nbsp;&nbsp;&nbsp;&nbsp;<span class="file-name">config.json</span> <span class="desc">&mdash; Configuration (API keys, model, etc.)</span><br>
+            &nbsp;&nbsp;&nbsp;&nbsp;<span class="file-name">MEMORY.md</span> <span class="desc">&mdash; Long-term memory</span><br>
+            &nbsp;&nbsp;&nbsp;&nbsp;<span class="dir-name">Sessions/</span> <span class="desc">&mdash; Saved conversation sessions</span><br>
             &nbsp;&nbsp;&nbsp;&nbsp;<span class="dir-name">improve/</span><br>
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="file-name">learnings.json</span> <span class="desc">&mdash; Aprendizajes registrados</span><br>
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="file-name">patterns.json</span> <span class="desc">&mdash; Patrones aprendidos</span><br>
-            &nbsp;&nbsp;&nbsp;&nbsp;<span class="dir-name">cache/</span> <span class="desc">&mdash; Cache de busqueda/obtencion web</span><br>
-            &nbsp;&nbsp;&nbsp;&nbsp;<span class="dir-name">reasoning/</span> <span class="desc">&mdash; Historial de planes</span><br>
-            &nbsp;&nbsp;&nbsp;&nbsp;<span class="dir-name">memory_decisions/</span> <span class="desc">&mdash; Registro de decisiones automaticas</span><br>
-            &nbsp;&nbsp;&nbsp;&nbsp;<span class="dir-name">hooks/</span> <span class="desc">&mdash; Scripts de hooks personalizados</span>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="file-name">learnings.json</span> <span class="desc">&mdash; Recorded learnings</span><br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="file-name">patterns.json</span> <span class="desc">&mdash; Learned patterns</span><br>
+            &nbsp;&nbsp;&nbsp;&nbsp;<span class="dir-name">cache/</span> <span class="desc">&mdash; Web search/fetch cache</span><br>
+            &nbsp;&nbsp;&nbsp;&nbsp;<span class="dir-name">reasoning/</span> <span class="desc">&mdash; Plan history</span><br>
+            &nbsp;&nbsp;&nbsp;&nbsp;<span class="dir-name">memory_decisions/</span> <span class="desc">&mdash; Automatic decision log</span><br>
+            &nbsp;&nbsp;&nbsp;&nbsp;<span class="dir-name">hooks/</span> <span class="desc">&mdash; Custom hook scripts</span>
         </div>
     </div>
 </section>
@@ -1065,28 +1065,28 @@
 <!-- ===== API Providers ===== -->
 <section class="section" id="providers">
     <div class="section-header fade-in">
-        <h2>Proveedores de IA</h2>
-        <p>Compatible con multiples proveedores y modelos de lenguaje</p>
+        <h2>AI Providers</h2>
+        <p>Compatible with multiple providers and language models</p>
         <div class="section-divider"></div>
     </div>
     <div class="features-grid" style="max-width:800px;margin:0 auto;">
         <div class="feature-card fade-in">
             <div class="feature-icon">&#127760;</div>
             <h3>Custom (slop.storo.cloud)</h3>
-            <p>Endpoint personalizado compatible con OpenAI. Modelo por defecto: <code>deepseek-v4.1-flash</code>. Cambio de modelo en caliente con <code>/model</code>.</p>
+            <p>Custom OpenAI-compatible endpoint. Default model: <code>deepseek-v4.1-flash</code>. Hot-swap models with <code>/model</code>.</p>
         </div>
         <div class="feature-card fade-in">
             <div class="feature-icon green">&#9889;</div>
-            <h3>Groq (Inferencia Rapida)</h3>
-            <p>Inferencia ultrarapida para Llama, Mixtral, Gemma y Qwen. Ideal para respuestas rapidas. Soporta reasoning_effort y max_completion_tokens.</p>
+            <h3>Groq (Fast Inference)</h3>
+            <p>Ultra-fast inference for Llama, Mixtral, Gemma, and Qwen. Ideal for quick responses. Supports reasoning_effort and max_completion_tokens.</p>
         </div>
     </div>
     <div class="code-block fade-in" style="max-width:800px;margin:2rem auto 0;">
-        <div class="code-header"><span>Cambio de modelo y proveedor</span></div>
+        <div class="code-header"><span>Change model and provider</span></div>
         <div class="code-body">
-            <span class="comment"># Cambiar modelo</span><br>
+            <span class="comment"># Change model</span><br>
             /model deepseek-v4.1-flash<br><br>
-            <span class="comment"># Cambiar proveedor</span><br>
+            <span class="comment"># Change provider</span><br>
             /provider custom<br>
             /provider groq
         </div>
@@ -1098,20 +1098,20 @@
     <div class="footer-inner">
         <div class="footer-links">
             <a href="https://github.com/josevdr95new/PSCoder" target="_blank">GitHub</a>
-            <a href="https://github.com/josevdr95new/PSCoder/blob/main/LICENSE" target="_blank">Licencia MIT</a>
+            <a href="https://github.com/josevdr95new/PSCoder/blob/main/LICENSE" target="_blank">MIT License</a>
             <a href="https://slop.storo.cloud" target="_blank">slop.storo.cloud</a>
             <a href="https://groq.com" target="_blank">Groq</a>
         </div>
-        <p class="footer-copy">PSCoder &mdash; Asistente de Programacion con IA para PowerShell</p>
+        <p class="footer-copy">PSCoder &mdash; AI Programming Assistant for PowerShell</p>
         <p class="footer-license">
             <svg width="16" height="16" viewBox="0 0 16 16" fill="var(--text-muted)"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
-            Repositorio: github.com/josevdr95new/PSCoder
+            Repository: github.com/josevdr95new/PSCoder
         </p>
     </div>
 </footer>
 
 <!-- Back to Top -->
-<button class="back-to-top" id="backToTop" aria-label="Volver arriba">&uarr;</button>
+<button class="back-to-top" id="backToTop" aria-label="Back to top">&uarr;</button>
 
 <!-- ===== JavaScript ===== -->
 <script>

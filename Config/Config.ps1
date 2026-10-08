@@ -55,7 +55,7 @@ function Initialize-PSCoderConfig {
     }
     $memFile = $Script:DefaultConfig.memoryFile
     if (-not (Test-Path $memFile)) {
-        "# PSCoder Memory`n`n## Preferencias`n`n## Proyectos`n" | Set-Content -Path $memFile -Encoding UTF8
+        "# PSCoder Memory`n`n## Preferences`n`n## Projects`n" | Set-Content -Path $memFile -Encoding UTF8
     }
 }
 

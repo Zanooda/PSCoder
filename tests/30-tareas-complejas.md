@@ -1,87 +1,87 @@
-# 30 Tareas Complejas para Pruebas de IA - PSCoder + OrcaRouter
+# 30 Complex Tasks for AI Testing - PSCoder + OrcaRouter
 # ============================================================
-# Configurar: /provider orca
-# Modelo: /model z-ai/glm-5.3-flash-free
+# Configure: /provider orca
+# Model: /model z-ai/glm-5.3-flash-free
 # API: https://api.orcarouter.ai/v1/chat/completions
 # ============================================================
 
-## CATEGORÍA 1: Razonamiento Lógico (1-6)
+## CATEGORY 1: Logical Reasoning (1-6)
 
-1. "Tres personas (Ana, Beto, Carla) tienen profesiones diferentes (médico, abogado, ingeniero). Ana no es médico. Beto no es abogado. Carla no es ingeniero ni médico. El abogado vive al lado del ingeniero. ¿Quién es cada profesión? Explica paso a paso."
+1. "Three people (Ana, Beto, Carla) have different professions (doctor, lawyer, engineer). Ana is not a doctor. Beto is not a lawyer. Carla is neither an engineer nor a doctor. The lawyer lives next to the engineer. Who has each profession? Explain step by step."
 
-2. "Tienes 8 bolas idénticas en apariencia, una pesa más. Tienes una balanza de dos platos. ¿Cuál es el MÍNIMO de pesadas para encontrar la más pesada? Demuestra que no se puede hacer en menos."
+2. "You have 8 balls that look identical, one weighs more. You have a two-pan balance. What is the MINIMUM number of weighings to find the heaviest one? Prove that it cannot be done in fewer."
 
-3. "Un tren sale de La Habana a Santiago a 80 km/h. Otro sale de Santiago a La Habana a 120 km/h. Distancia: 900 km. ¿En cuánto tiempo se cruzan? ¿A qué distancia de La Habana?"
+3. "A train leaves Havana for Santiago at 80 km/h. Another leaves Santiago for Havana at 120 km/h. Distance: 900 km. How long until they cross? At what distance from Havana?"
 
-4. "Escribe una función PowerShell que reciba un array de números y devuelva: media, mediana, moda, desviación estándar y rango. Maneja arrays vacíos y duplicados."
+4. "Write a PowerShell function that takes an array of numbers and returns: mean, median, mode, standard deviation, and range. Handle empty arrays and duplicates."
 
-5. "Matriz 3x3 con números del 1 al 9, suma de cada fila/columna/diagonal = 15. ¿Cuántas formas hay? Lista las soluciones."
+5. "3x3 matrix with numbers from 1 to 9, sum of each row/column/diagonal = 15. How many ways are there? List the solutions."
 
-6. "Un granjero tiene 100m de cerca y quiere encerrar un área rectangular junto a un río (un lado es el río). ¿Dimensiones que maximizan el área? Usa cálculo diferencial."
+6. "A farmer has 100m of fence and wants to enclose a rectangular area next to a river (one side is the river). Dimensions that maximize the area? Use differential calculus."
 
-## CATEGORÍA 2: Programación (7-12)
+## CATEGORY 2: Programming (7-12)
 
-7. "Script PowerShell que monitoree un directorio y detecte archivos nuevos/modificados/eliminados en tiempo real. Registra cambios en CSV."
+7. "PowerShell script that monitors a directory and detects new/modified/deleted files in real time. Logs changes to CSV."
 
-8. "Crea clase PowerShell 'NetworkMonitor': ping concurrente a múltiples hosts, registra latencia promedio, detecta desconexiones, genera reporte HTML."
+8. "Create a PowerShell class 'NetworkMonitor': concurrent ping to multiple hosts, logs average latency, detects disconnections, generates an HTML report."
 
-9. "Implementa merge sort en PowerShell. Maneja arrays de cualquier tipo, comparador personalizado, muestra número de comparaciones."
+9. "Implement merge sort in PowerShell. Handles arrays of any type, custom comparer, shows number of comparisons."
 
-10. "Función recursiva Fibonacci con memoización en PowerShell. Compara rendimiento con/sin memoización para n=40."
+10. "Recursive Fibonacci function with memoization in PowerShell. Compare performance with/without memoization for n=40."
 
-11. "Script que lee JSON con servidores (nombre, IP, puerto), hace test TCP a cada uno, genera reporte con tiempo de respuesta y recomendaciones."
+11. "Script that reads JSON with servers (name, IP, port), runs a TCP test to each one, generates a report with response time and recommendations."
 
-12. "Patrón Observer en PowerShell: clase Subject notifica a múltiples observers. Úsalo para sistema de alertas con 3 servicios."
+12. "Observer pattern in PowerShell: a Subject class notifies multiple observers. Use it for an alerting system with 3 services."
 
-## CATEGORÍA 3: Análisis de Datos (13-18)
+## CATEGORY 3: Data Analysis (13-18)
 
-13. "Dado CSV con: fecha, provincia, velocidad_mbps, operador — agrupa por provincia, calcula promedio/máx/mín, identifica outliers (>2 desv. estándar)."
+13. "Given a CSV with: date, province, speed_mbps, operator — group by province, compute average/max/min, identify outliers (>2 standard deviations)."
 
-14. "Extrae del texto: entidades, fechas, cantidades, lugares. Texto: 'El 15 de marzo de 2026, TechCorp lanzó CloudX 3.0 en Madrid, precio 299 euros, soporta 10,000 usuarios.'"
+14. "Extract from the text: entities, dates, quantities, places. Text: 'On March 15, 2026, TechCorp launched CloudX 3.0 in Madrid, price 299 euros, supports 10,000 users.'"
 
-15. "Genera datos sintéticos de velocidad de internet para 16 provincias de Cuba durante 30 días, con variaciones realistas, exporta a CSV."
+15. "Generate synthetic internet speed data for 16 provinces of Cuba over 30 days, with realistic variations, export to CSV."
 
-16. "Algoritmo que detecte anomalías en serie temporal de latencia de red usando Z-score con ventana móvil de 10."
+16. "Algorithm that detects anomalies in a network latency time series using Z-score with a moving window of 10."
 
-17. "Dado logs de red (timestamp, IP origen/destino, bytes, protocolo) — detecta: escaneo de puertos, transferencias anómalas, conexiones sospechosas."
+17. "Given network logs (timestamp, source/destination IP, bytes, protocol) — detect: port scanning, anomalous transfers, suspicious connections."
 
-18. "Función que compara dos CSV por columna clave, genera diff: filas añadidas/eliminadas/modificadas con valor anterior y nuevo."
+18. "Function that compares two CSVs by key column, generates a diff: added/deleted/modified rows with old and new value."
 
-## CATEGORÍA 4: Agentes Autónomos (19-24)
+## CATEGORY 4: Autonomous Agents (19-24)
 
-19. "Agente DevOps: revisa el directorio actual, identifica proyecto git, analiza últimos 5 commits, sugiere 3 mejoras de workflow."
+19. "DevOps agent: inspect the current directory, identify the git project, analyze the last 5 commits, suggest 3 workflow improvements."
 
-20. "Agente de seguridad: escanea directorio buscando credenciales hardcodeadas, permisos excesivos, comandos peligrosos. Genera reporte."
+20. "Security agent: scan the directory looking for hardcoded credentials, excessive permissions, dangerous commands. Generate a report."
 
-21. "Code review: lee el archivo .ps1 más reciente, analiza bugs, malas prácticas, código duplicado. Sugiere refactorizaciones."
+21. "Code review: read the most recent .ps1 file, analyze bugs, bad practices, duplicated code. Suggest refactorings."
 
-22. "Agente documentación: lee todos los .ps1 del directorio, extrae funciones públicas, genera README.md con tabla de funciones y ejemplos."
+22. "Documentation agent: read all .ps1 files in the directory, extract public functions, generate README.md with a table of functions and examples."
 
-23. "Troubleshooting: simula servicio web en puerto 8080 que no responde. Crea plan de diagnóstico, ejecuta comandos, propón soluciones."
+23. "Troubleshooting: simulate a web service on port 8080 that does not respond. Create a diagnostic plan, run commands, propose solutions."
 
-24. "Optimización: implementa 3 algoritmos de búsqueda (lineal, binaria, hash) en PowerShell, mide tiempo con Measure-Command para 1K/10K/100K elementos."
+24. "Optimization: implement 3 search algorithms (linear, binary, hash) in PowerShell, measure time with Measure-Command for 1K/10K/100K elements."
 
-## CATEGORÍA 5: Creatividad y Multi-step (25-30)
+## CATEGORY 5: Creativity and Multi-step (25-30)
 
-25. "Diseña arquitectura para app de monitoreo de red móvil: componentes, APIs, DB, flujo de datos. Diagrama ASCII incluido."
+25. "Design the architecture for a mobile network monitoring app: components, APIs, DB, data flow. ASCII diagram included."
 
-26. "Cuento ciencia ficción 500 palabras: IA que descubre que siente dolor. Introducción, nudo, desenlace, twist final."
+26. "500-word science fiction story: an AI that discovers it feels pain. Introduction, rising action, resolution, final twist."
 
-27. "Curso PowerShell de 5 lecciones para principiantes: objetivos, teoría, 3 ejercicios progresivos, proyecto final."
+27. "5-lesson PowerShell course for beginners: objectives, theory, 3 progressive exercises, final project."
 
-28. "Debate entre 3 expertos (arquitecto, sysadmin, CTO) sobre migrar de monolito a microservicios. 3 argumentos a favor y 3 en contra cada uno."
+28. "Debate among 3 experts (architect, sysadmin, CTO) about migrating from a monolith to microservices. 3 arguments for and 3 against for each one."
 
-29. "Plan de negocios para startup de monitoreo de red en Cuba: análisis de mercado, modelo de ingresos, proyección 12 meses, costos."
+29. "Business plan for a network monitoring startup in Cuba: market analysis, revenue model, 12-month projection, costs."
 
-30. "Protocolo de comunicación para enjambre de 5 robots exploradores: mensajes, prioridades, manejo de conflictos, algoritmo de consenso."
+30. "Communication protocol for a swarm of 5 exploring robots: messages, priorities, conflict handling, consensus algorithm."
 
-## CRITERIOS DE EVALUACIÓN (1-10)
+## EVALUATION CRITERIA (1-10)
 
-| Puntuación | Descripción |
+| Score | Description |
 |-----------|-------------|
-| 1-2 | Respuesta incoherente o no respondió la pregunta |
-| 3-4 | Intentó responder pero con errores graves o incompleto |
-| 5-6 | Respuesta correcta pero superficial, sin profundidad |
-| 7-8 | Respuesta buena, con detalles y razonamiento adecuado |
-| 9 | Excelente, creativo, con insights adicionales |
-| 10 | Perfecto, mejor de lo esperado, código ejecutable verificado |
+| 1-2 | Incoherent answer or did not answer the question |
+| 3-4 | Attempted to answer but with serious errors or incomplete |
+| 5-6 | Correct answer but superficial, without depth |
+| 7-8 | Good answer, with details and adequate reasoning |
+| 9 | Excellent, creative, with additional insights |
+| 10 | Perfect, better than expected, verified executable code |

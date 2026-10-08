@@ -148,8 +148,8 @@ function Confirm-Action {
     Write-Host " Response: " -NoNewline -ForegroundColor $Script:Colors.Dim
     $response = Read-Host
     switch ($response.ToLower()) {
-        "s" { return "yes" } "si" { return "yes" } "y" { return "yes" }
-        "a" { return "always" } "siempre" { return "always" }
+        "y" { return "yes" } "yes" { return "yes" }
+        "a" { return "always" } "always" { return "always" }
         default { return "no" }
     }
 }
