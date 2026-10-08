@@ -32,46 +32,37 @@ function Write-PSCoderPrompt {
 function Write-ThinkingStart {
     Write-Host ""
     Write-Host " [Thinking] " -NoNewline -ForegroundColor $Script:Colors.Thinking
-    Write-Host "Processing..." -NoNewline -ForegroundColor $Script:Colors.Thinking
-}
-
-function Write-ThinkingDone {
-    Write-Host ""
-    Write-Host " [Done] " -NoNewline -ForegroundColor $Script:Colors.Success
-    Write-Host "Response ready" -ForegroundColor $Script:Colors.Success
+    Write-Host "..." -ForegroundColor $Script:Colors.Thinking
 }
 
 function Write-AssistantMessage {
     param([string]$Message)
     Write-Host ""
-    Write-Host " --- Assistant ----------------------------------------" -ForegroundColor $Script:Colors.Assistant
-    Write-Host " $Message" -ForegroundColor $Script:Colors.Bright
-    Write-Host " ------------------------------------------------------" -ForegroundColor $Script:Colors.Assistant
+    Write-Host $Message -ForegroundColor $Script:Colors.Bright
 }
 
 function Write-ToolCall {
-    param([string]$ToolName, [string]$Arguments)
+    param([string]$ToolName, [string]$Summary)
+    $text = if ($Summary) { $Summary } else { "" }
+    $text = ($text -replace "\s+", " ").Trim()
+    if ($text.Length -gt 150) { $text = $text.Substring(0, 150) + "..." }
     Write-Host ""
-    Write-Host " --- Tool: $ToolName -----------------------------------" -ForegroundColor $Script:Colors.ToolCall
-    if ($Arguments) {
-        $preview = if ($Arguments.Length -gt 150) { $Arguments.Substring(0, 150) + "..." } else { $Arguments }
-        Write-Host "   args: $preview" -ForegroundColor $Script:Colors.Info
-    }
+    Write-Host " > " -NoNewline -ForegroundColor $Script:Colors.ToolCall
+    Write-Host $ToolName -NoNewline -ForegroundColor $Script:Colors.ToolCall
+    if ($text) { Write-Host ": $text" -ForegroundColor $Script:Colors.Dim } else { Write-Host "" }
 }
 
 function Write-ToolResult {
     param([string]$ToolName, [string]$Result, [bool]$Success = $true)
-    $statusIcon = if ($Success) { "OK" } else { "FAIL" }
-    $statusColor = if ($Success) { $Script:Colors.Success } else { $Script:Colors.Error }
-
-    Write-Host ""
-    Write-Host " --- Result: $ToolName [$statusIcon] --------------------" -ForegroundColor $Script:Colors.ToolResult
-
-    if ($Result) {
-        $preview = if ($Result.Length -gt 400) { $Result.Substring(0, 400) + "`n..." } else { $Result }
-        $preview -split "`n" | Select-Object -First 8 | ForEach-Object {
-            Write-Host "   $_" -ForegroundColor $Script:Colors.Info
-        }
+    if (-not $Result) { return }
+    $color = if ($Success) { $Script:Colors.ToolResult } else { $Script:Colors.Error }
+    $lines = @($Result -split "`r?`n")
+    $max = 8
+    for ($i = 0; $i -lt $lines.Count -and $i -lt $max; $i++) {
+        Write-Host "   $($lines[$i])" -ForegroundColor $color
+    }
+    if ($lines.Count -gt $max) {
+        Write-Host "   ... (+$($lines.Count - $max) more lines)" -ForegroundColor $Script:Colors.Dim
     }
 }
 

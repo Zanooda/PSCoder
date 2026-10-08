@@ -144,9 +144,7 @@ function Start-PSCoder {
         while ($continueLoop) {
             $toolSchemas = if ($config.toolsEnabled -ne $false) { Get-ToolSchemas } else { @() }
 
-            Write-AgentThought -Thought "Processing your request..."
             Write-ThinkingStart
-            $apiStart = Get-Date
 
             # Call API based on provider with error recovery
             $response = $null
@@ -200,8 +198,6 @@ function Start-PSCoder {
                 }
             }
 
-            $apiElapsed = ((Get-Date) - $apiStart).TotalSeconds
-            Write-ThinkingDone
             $retryCount = 0
 
             if (-not $response) {
@@ -237,28 +233,22 @@ function Start-PSCoder {
                         if ($parsedArgs) { $toolArgs = $parsedArgs }
                     } catch {}
 
-                    # Narrate what tool is about to do
+                    # One compact summary line per tool call
                     $toolDesc = switch ($toolName) {
-                        "execute_powershell" { if ($toolArgs.command) { "Executing: $($toolArgs.command)" } else { "Executing PowerShell command" } }
-                        "read_file" { if ($toolArgs.path) { "Reading file: $($toolArgs.path)" } else { "Reading a file" } }
-                        "write_file" { if ($toolArgs.path) { "Writing file: $($toolArgs.path)" } else { "Writing a file" } }
-                        "edit_file" { if ($toolArgs.path) { "Editing file: $($toolArgs.path)" } else { "Editing a file" } }
-                        "search_files" { if ($toolArgs.pattern) { "Searching for: $($toolArgs.pattern)" } else { "Searching files" } }
-                        "glob_files" { if ($toolArgs.pattern) { "Finding files matching: $($toolArgs.pattern)" } else { "Finding files" } }
-                        "list_directory" { if ($toolArgs.path) { "Listing directory: $($toolArgs.path)" } else { "Listing current directory" } }
-                        "web_search" { if ($toolArgs.query) { "Searching web for: $($toolArgs.query)" } else { "Searching the web" } }
-                        "web_fetch" { if ($toolArgs.url) { "Fetching URL: $($toolArgs.url)" } else { "Fetching a URL" } }
-                        "auto_heal" { "Analyzing error and finding fix" }
-                        "learn_from_error" { "Learning from this error for next time" }
-                        "find_solution" { "Searching for a previous solution" }
-                        "list_skills" { "Listing available skills" }
-                        "read_skill" { if ($toolArgs.skillName) { "Loading skill: $($toolArgs.skillName)" } else { "Loading a skill" } }
-                        "save_learning" { if ($toolArgs.category) { "Saving learning: $($toolArgs.category)" } else { "Saving learning" } }
-                        default { "Using tool: $toolName" }
+                        "execute_powershell" { $toolArgs.command }
+                        "read_file" { $toolArgs.path }
+                        "write_file" { $toolArgs.path }
+                        "edit_file" { $toolArgs.path }
+                        "search_files" { $toolArgs.pattern }
+                        "glob_files" { $toolArgs.pattern }
+                        "list_directory" { if ($toolArgs.path) { $toolArgs.path } else { "." } }
+                        "web_search" { $toolArgs.query }
+                        "web_fetch" { $toolArgs.url }
+                        "read_skill" { $toolArgs.skillName }
+                        "save_learning" { $toolArgs.category }
+                        default { $null }
                     }
-                    Write-AgentAction -Action $toolDesc
-
-                    Write-ToolCall -ToolName $toolName -Arguments $toolCall.function.arguments
+                    Write-ToolCall -ToolName $toolName -Summary $toolDesc
 
                     # Check permissions
                     $needsApproval = Test-ToolNeedsApproval -ToolName $toolName -Arguments $toolArgs
@@ -333,15 +323,10 @@ function Start-PSCoder {
                             $result = $truncatedResult
                         }
 
-                        # Narrate result
-                        $resultSummary = if ($result.Length -gt 100) { $result.Substring(0, 100) + "..." } else { $result }
-                        Write-AgentResult -Result "$toolName completed: $resultSummary"
-
                         Write-ToolResult -ToolName $toolName -Result $result -Success $true
                         $toolResultCount++
                     } else {
                         $result = "User rejected execution of this tool."
-                        Write-AgentError -Error "User rejected the action"
                         Write-ToolResult -ToolName $toolName -Result $result -Success $false
 
                         # Still fire PostToolUse hook for rejected tools

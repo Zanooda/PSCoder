@@ -39,17 +39,6 @@ function Write-AgentThought {
     }
 }
 
-function Write-AgentAction {
-    param([string]$Action, [bool]$Speak = $true)
-    if (-not $Script:AgentNarrationEnabled) { return }
-    Write-Host ""
-    Write-Host "  [Action] " -NoNewline -ForegroundColor Yellow
-    Write-Host $Action -ForegroundColor Yellow
-    if ($Speak) {
-        Speak-Text -Text $Action
-    }
-}
-
 function Write-AgentResult {
     param([string]$Result, [bool]$Speak = $true)
     if (-not $Script:AgentNarrationEnabled) { return }
